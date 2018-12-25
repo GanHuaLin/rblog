@@ -1,0 +1,29 @@
+{
+  "name": "blog-birch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbackrock/blog-birch.git"
+  },
+  "keywords": [
+    "Static blog",
+    "Next.js"
+  ],
+  "author": "yhuan",
+  "bugs": {
+    "url": "https://github.com/rbackrock/blog-birch/issues"
+  },
+  "homepage": "https://github.com/rbackrock/blog-birch#readme",
+  "devDependencies": {
+    "next": "^7.0.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}

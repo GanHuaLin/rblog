@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,10 @@
   },
   "homepage": "https://github.com/rbackrock/blog-birch#readme",
   "devDependencies": {
+    "lodash": "^4.17.11",
     "next": "^7.0.2",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-markdown": "^4.0.4"
   }
 }

@@ -46,10 +46,16 @@ export function findArticleListByCategory(categoryId) {
 
   if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) {
     _.forIn(data, (val, currCategoryId) => {
-      data[currCategoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].map(item => list.push(item));
+      data[currCategoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].map(item => {
+        list.push({
+          [COMMON_CONST.ARTICLE_DATA_ID_TEXT]: item[COMMON_CONST.ARTICLE_DATA_ID_TEXT],
+          [COMMON_CONST.ARTICLE_DATA_TIME_TEXT]: item[COMMON_CONST.ARTICLE_DATA_TIME_TEXT],
+          [COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]: item[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT],
+        })
+      });
     });
   } else {
-    list = data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT];
+    list = _.cloneDeep(data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT]);
   }
 
   return list;

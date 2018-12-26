@@ -2,7 +2,7 @@ export default (props) => (
   <div>
     <ul>
       {
-        props.categoryList.map(item => (<li>{item.name}</li>))
+        props.categoryList.map((item, index) => (<li key={index}>{item.name}</li>))
       }
     </ul>
 

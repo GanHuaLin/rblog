@@ -1,5 +1,8 @@
-import data from '../data';
 import _ from 'lodash';
+import * as COMMON_CONST from '../common/const';
+
+import data from '../db/article-meta.json';
+import articleData from '../db/article-list.json';
 
 /**
  * 查询所有文章分类
@@ -7,12 +10,25 @@ import _ from 'lodash';
  */
 export function findAllCategory() {
   const categoryList = [];
+  let categoryListCount = 0;
 
-  _.forIn(data, (val, category) => {
+  _.forIn(data, (val, categoryId) => {
     const currCategory = {};
-    currCategory.name = category;
-    currCategory.num = data[category].length;
+    const currCategoryArticleCount = data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length;
+
+    currCategory.id = categoryId;
+    currCategory.name = data[categoryId][COMMON_CONST.CATEGORY_DATA_NAME_TEXT];
+    currCategory.num = currCategoryArticleCount;
     categoryList.push(currCategory);
+
+    categoryListCount += currCategoryArticleCount;
+  });
+
+  // 特殊，文章数据中没有全部分类，通过程序自行添加，并且拥有排第一位
+  categoryList.unshift({
+    id: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME,
+    name: COMMON_CONST.CATEGORY_DATA_ALL_NAME,
+    num: categoryListCount
   });
 
   return categoryList;
@@ -22,36 +38,39 @@ export function findAllCategory() {
  * 根据分类名称查询文章列表
  * 1. 如果传入分类名称，查询对应分类的文章列表
  * 2. 如果没有传入分类名称，查询所有文章列表
- * @param category 分类名称
+ * @param categoryId 分类名称
  * @returns {Array} 返回文章列表数组
  */
-export function findArticleListByCategory(category) {
+export function findArticleListByCategory(categoryId) {
   let list = [];
 
-  if (category) {
-    list = data[category].map(item => ({'time': item.time, title: item.title}));
-  } else {
-    _.forIn(data, (val, key) => {
-      data[key].map(item => list.push({'time': item.time, title: item.title}));
+  if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) {
+    _.forIn(data, (val, currCategoryId) => {
+      data[currCategoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].map(item => list.push(item));
     });
+  } else {
+    list = data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT];
   }
 
   return list;
 }
 
 /**
- * 通过文章标题获取文章信息
- * @param title 文章标题
+ * 通过文章 id 获取文章信息
+ * @param id 文章标题
  * @returns {*} 返回文章信息对象
  */
-export function findArticleByTitle(title) {
+export function findArticleById(id) {
   const categoryList = _.keys(data);
 
   for (let i = 0; i < categoryList.length; i++) {
-    for (let n = 0, currArticle = {}; n < data[categoryList[i]].length; n++) {
-      currArticle = data[categoryList[i]][n];
-      if (currArticle.title === title) {
-        return currArticle;
+    for (let n = 0, currArticle = {}; n < data[categoryList[i]][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length; n++) {
+      currArticle = data[categoryList[i]][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT][n];
+      if (currArticle[COMMON_CONST.ARTICLE_DATA_ID_TEXT] === id) {
+        const article = _.cloneDeep(currArticle);
+        article[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT] = articleData[id];
+
+        return article;
       }
     }
   }

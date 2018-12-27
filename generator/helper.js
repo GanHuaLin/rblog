@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 /**
  * markdown 文件规则：
@@ -26,11 +25,11 @@ const path = require('path');
  * @param result 当前分类下文章信息构建体对象
  * @returns {null} 扫描 /post 文件夹，构建一个有分类和该分类下所有文章信息的对象并且返回，例如: {"program": ["[Learn Java]-20181225.md" , "[Learn JavaScript]-20181225.md"]}
  */
-exports.fetchPostMeta = ({filePath, countLevel=1, maxDirLevel=2, currDirName='', result={}}) => {
+
+function fetchPostMeta({filePath, countLevel=1, maxDirLevel=2, currDirName='', result={}}) {
   if (fs.existsSync(filePath)) {
     const files = fs.readdirSync(filePath);
     const postList = [];
-    const markdownFileNameFormatReg = /\[\S+]-\d{8}.md/g;
 
     for (let i = 0; i < files.length; i++) {
       const currFileName = files[i];
@@ -39,19 +38,16 @@ exports.fetchPostMeta = ({filePath, countLevel=1, maxDirLevel=2, currDirName='',
 
       if (fileStat.isDirectory()) {
         if (countLevel < maxDirLevel) {
-          if (!fetchPostMeta({filePath:currFilePath, countLevel: countLevel + 1, currDirName: currFileName, result})) {
-            return null;
-          }
+          fetchPostMeta({filePath:currFilePath, countLevel: countLevel + 1, currDirName: currFileName, result});
         } else {
-          return null;
+          throw 'post 文件夹下有目录超过两层';
         }
       } else if (fileStat.isFile()) {
-        if (!markdownFileNameFormatReg.test(currFileName)) {
-          return null;
-        } else if (path.extname(currFileName) !== '.md') {
-          return null;
-        } else if (countLevel === 1) {
-          return null;
+        const markdownFileNameFormatReg = /\[(.{1,})\]-\d{8}\.md/g;
+        if (countLevel === 1) {
+          throw 'post 文件夹下只能有分类文件夹不能有任何文件';
+        } else if (!markdownFileNameFormatReg.test(currFileName)) {
+          throw 'markdown 文件名称不符合规则';
         } else {
           postList.push(currFileName);
         }
@@ -65,4 +61,8 @@ exports.fetchPostMeta = ({filePath, countLevel=1, maxDirLevel=2, currDirName='',
   } else {
     return null;
   }
+}
+
+module.exports = {
+  fetchPostMeta
 };

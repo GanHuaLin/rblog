@@ -24,6 +24,7 @@
   "homepage": "https://github.com/rbackrock/blog-birch#readme",
   "devDependencies": {
     "lodash": "^4.17.11",
+    "moment": "^2.23.0",
     "next": "^7.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

@@ -45,7 +45,9 @@ function fetchPostMeta({filePath, countLevel=1, maxDirLevel=2, currDirName='', r
       } else if (fileStat.isFile()) {
         const markdownFileNameFormatReg = /\[(.{1,})\]-\d{8}\.md/g;
         if (countLevel === 1) {
-          throw 'post 文件夹下只能有分类文件夹不能有任何文件';
+          if (currFileName !== '.gitignore') {
+            throw 'post 文件夹下只能有分类文件夹或者.gitignore文件，不能有除此以外的任何文件';
+          }
         } else if (!markdownFileNameFormatReg.test(currFileName)) {
           throw 'markdown 文件名称不符合规则';
         } else {

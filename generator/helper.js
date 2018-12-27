@@ -28,7 +28,8 @@ const postPath = `${process.cwd()}/post`;
  * @param maxDirLevel 最大文件夹层级
  * @param currDirName 当前文件夹名称
  * @param result 当前分类下文章信息构建体对象
- * @returns {null} 扫描 /post 文件夹，构建一个有分类和该分类下所有文章信息的对象并且返回，例如: {'3LTPYxNCLR': {ategory_name: 'Program', article_list: [{"id": "VZIuEcM6Vu", "time": "20181225", "title": "Learn Spring"}]}}
+ * @returns {null} 扫描 /post 文件夹，构建一个有分类和该分类下所有文章信息的对象并且返回，例如:
+ * {'3LTPYxNCLR': {ategory_name: 'Program', article_list: [{"id": "VZIuEcM6Vu", "time": "20181225", "title": "Learn Spring"}]}}
  */
 
 function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result={}}) {
@@ -117,11 +118,6 @@ function readArticleContent(articlePath) {
  */
 function fetchArticleList(articleMeta) {
   const articleList = {};
-  // _.forIn(articleMeta, (val, articleMetaKey) => {
-  //   articleMeta[articleMetaKey]['article_list'].forEach(article => {
-  //     articleList[article.id] = readArticleContent(`${postPath}/${articleMeta[articleMetaKey]['category_name']}/[${article.title}]-[${article.time}].md`);
-  //   });
-  // });
   forInArticleList(articleMeta, (val, articleMetaKey, article) => {
     articleList[article.id] = readArticleContent(`${postPath}/${articleMeta[articleMetaKey]['category_name']}/[${article.title}]-[${article.time}].md`);
   });

@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "next ./scripts/generate-db",
     "dev": "next",
     "build": "next build",
     "start": "next start",

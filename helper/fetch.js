@@ -1,8 +1,15 @@
 import _ from 'lodash';
 import * as COMMON_CONST from '../common/const';
 
-import data from '../db/article-meta.json';
-import articleData from '../db/article-list.json';
+let data = {};
+let articleData = {};
+
+try {
+  data = require('../db/article-meta.json');
+  articleData = require('../db/article-list.json');
+} catch (e) {
+  throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
+}
 
 /**
  * 查询所有文章分类
@@ -24,7 +31,7 @@ export function findAllCategory() {
     categoryListCount += currCategoryArticleCount;
   });
 
-  // 特殊，文章数据中没有全部分类，通过程序自行添加，并且拥有排第一位
+  // 特殊，文章数据中没有全部分类，通过程序自行添加，并且永远排第一位
   categoryList.unshift({
     id: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME,
     name: COMMON_CONST.CATEGORY_DATA_ALL_NAME,

@@ -1,5 +1,12 @@
-const articleMeta = require('./db/article-meta.json');
 const _ = require('lodash');
+
+let articleMeta = {};
+
+try {
+  articleMeta = require('./db/article-meta.json');
+} catch (e) {
+  throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
+}
 
 /**
  * 导出所有文章分类和文章详情的路径映射

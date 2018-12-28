@@ -181,34 +181,10 @@ function forInArticleList(articleMeta, func) {
   });
 }
 
-/**
- * 删除指定文件夹下所有文件
- * @param path 要删除文件夹的路径
- * @param countLevel 文件夹层级
- */
-function removeDirectoryFile(path, countLevel=1) {
-  if (fs.existsSync(path)) {
-    const files = fs.readdirSync(path);
-    files.forEach(fileName => {
-      const currFilePath = `${path}/${fileName}`;
-      if (fs.statSync(currFilePath).isDirectory()) {
-        removeDirectoryFile(currFilePath, countLevel + 1);
-      } else {
-        fs.unlinkSync(currFilePath);
-      }
-    });
-
-    if (countLevel !== 1) {
-      fs.rmdirSync(path);
-    }
-  }
-}
-
 module.exports = {
   fetchArticleMeta,
   fetchArticleList,
   fetchArticleMetaAndList,
   clearArticleMetaData,
   forInArticleList,
-  removeDirectoryFile
 };

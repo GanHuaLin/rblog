@@ -1,5 +1,6 @@
 const fs = require('fs');
 const helper = require('./helper');
+const util = require('../common/util');
 
 const dbPath = `${process.cwd()}/db`;
 const ARTICLE_META_FILE_NAME = 'article-meta.json';
@@ -11,7 +12,10 @@ function generateArticleMetaDb(articleMeta) {
 
   return new Promise((resolve, reject) => {
     writeArticleMetaDbStream.on('finish', resolve);
-    writeArticleMetaDbStream.on('error', reject);
+    writeArticleMetaDbStream.on('error', () => {
+      util.removeDirectoryFile(dbPath, ['.gitignore']);
+      reject();
+    });
   });
 }
 
@@ -20,8 +24,11 @@ function generateArticleListDb (articleList) {
   writeArticleListDbStream.end(JSON.stringify(articleList));
 
   return new Promise((resolve, reject) => {
-    writeArticleListDbStream.on('error', reject);
     writeArticleListDbStream.on('finish', resolve);
+    writeArticleListDbStream.on('error', () => {
+      util.removeDirectoryFile(dbPath, ['.gitignore']);
+      reject();
+    });
   });
 }
 
@@ -30,5 +37,5 @@ exports.run = () => {
   return Promise.all([
     generateArticleMetaDb(articleMetaAndListCombine.articleMeta),
     generateArticleListDb(articleMetaAndListCombine.articleList)
-  ])
+  ]);
 };

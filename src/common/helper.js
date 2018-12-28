@@ -17,13 +17,16 @@ const postPath = `${process.cwd()}/_post`;
  * 3. /_post 文件夹下的分类文件夹里只能放对应分类的文章
  * 4. /_post 文件夹下的分类文件夹里不能放除 markdown 以外的任何文件，且 markdown 文件必须要有 .md 后缀名
  *
- * 该方法用于提取 /_post 文件夹下的文章，然后根据信息构建特殊结构的文章元数据对象返回
+ * 该方法有两个功能：
+ * 1. 用于提取 /_post 文件夹下的文章，然后根据信息构建特殊结构的文章元数据对象返回
+ * 2. 验证 /_post 文件夹下的文章是否合法
  *
  * 如下返回值有特殊含义：
  * 1. 空对象 {} 表示有分类文件夹但是该分类下没有文章
  * 2. null 表示 /post 文件夹有不符合规则文件，包括 markdown 文件名称不符合规则
  *
  * @param filePath 文件路径
+ * @param isValid 是否用于验证
  * @param countLevel 文件夹层级
  * @param maxDirLevel 最大文件夹层级
  * @param currDirName 当前文件夹名称
@@ -32,7 +35,7 @@ const postPath = `${process.cwd()}/_post`;
  * {'3LTPYxNCLR': {ategory_name: 'Program', article_list: [{"id": "VZIuEcM6Vu", "time": "20181225", "title": "Learn Spring"}]}}
  */
 
-function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result={}}={}) {
+function fetchOrValidArticleMeta({filePath=postPath, isValid=false, countLevel=1, maxDirLevel=2, currDirName='', result={}}={}) {
   if (fs.existsSync(filePath)) {
     const files = fs.readdirSync(filePath);
     const postList = [];
@@ -46,7 +49,7 @@ function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currD
 
       if (fileStat.isDirectory()) {
         if (countLevel < maxDirLevel) {
-          fetchArticleMeta({filePath:currFilePath, countLevel: countLevel + 1, currDirName: currFileName, result});
+          fetchOrValidArticleMeta({filePath:currFilePath, isValid, countLevel: countLevel + 1, currDirName: currFileName, result});
         } else {
           throw '_post 文件夹下有目录超过两层';
         }
@@ -64,31 +67,36 @@ function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currD
 
         if (countLevel === 1) {
           if (currFileName !== '.gitignore') {
-            throw '_post 文件夹下只能有分类文件夹或者.gitignore文件，不能有除此以外的任何文件';
+            throw `${currFileName}不合法 _post 文件夹下只能有分类文件夹或者.gitignore文件，不能有除此以外的任何文件`;
           }
         } else if (!markdownFileNameFormatRegExp.test(currFileName)) {
-          throw 'markdown 文件名称不符合规则';
+          throw `${currFileName}不合法 markdown 文件名称不符合规则`;
         } else if (!moment(fileNameDatePartString).isValid()) {
-          throw 'markdown 文件名称中日期格式部分格式不正确';
+          throw `${currFileName}不合法 markdown 文件名称中日期格式部分格式不正确`;
         } else {
-          postList.push({
-            id: shortId(),
-            time: fileNameDatePartString,
-            title: fileNameTitlePartString
-          });
+          if (!isValid) {
+            postList.push({
+              id: shortId(),
+              time: fileNameDatePartString,
+              title: fileNameTitlePartString
+            });
+          }
         }
       }
     }
 
-    if (currDirName) {
-      result[categoryId] = {
-        category_name: categoryName,
-        article_list: postList
-      };
+    if (!isValid) {
+      if (currDirName) {
+        result[categoryId] = {
+          category_name: categoryName,
+          article_list: postList
+        };
+      }
     }
-    return result;
+
+    return isValid ? true : result;
   } else {
-    return null;
+    return isValid ? false : null;
   }
 }
 
@@ -130,7 +138,7 @@ function fetchArticleList(articleMeta) {
  * @returns {{articleList, articleMeta: *}} {文章列表对象，文章元数据对象}
  */
 function fetchArticleMetaAndList() {
-  const articleMeta = this.fetchArticleMeta();
+  const articleMeta = this.fetchOrValidArticleMeta();
   this.clearArticleMetaData(articleMeta);
   const articleList = this.fetchArticleList(articleMeta);
 
@@ -182,7 +190,7 @@ function forInArticleList(articleMeta, func) {
 }
 
 module.exports = {
-  fetchArticleMeta,
+  fetchOrValidArticleMeta,
   fetchArticleList,
   fetchArticleMetaAndList,
   clearArticleMetaData,

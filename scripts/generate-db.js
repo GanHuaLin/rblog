@@ -6,9 +6,8 @@ try {
   .then(() => {
     console.log('文章数据生成成功');
   }, err => {
-    console.log('文章数据生成失败');
-    console.log(err)
+    console.log(`文章数据生成失败，${err}`);
   });
 } catch (e) {
-  console.log(e);
+  console.log(`文章数据生成失败，${e}`);
 }

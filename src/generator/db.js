@@ -1,5 +1,5 @@
 const fs = require('fs');
-const helper = require('./helper');
+const helper = require('../common/helper');
 const util = require('../common/util');
 
 const dbPath = `${process.cwd()}/db`;
@@ -8,7 +8,7 @@ const ARTICLE_LIST_FILE_NAME = 'article-list.json';
 
 function generateArticleMetaDb(articleMeta) {
   const writeArticleMetaDbStream = fs.createWriteStream(`${dbPath}/${ARTICLE_META_FILE_NAME}`);
-  writeArticleMetaDbStream.end(JSON.stringify(articleMeta));
+  writeArticleMetaDbStream.write(JSON.stringify(articleMeta));
 
   return new Promise((resolve, reject) => {
     writeArticleMetaDbStream.on('finish', resolve);
@@ -21,7 +21,7 @@ function generateArticleMetaDb(articleMeta) {
 
 function generateArticleListDb (articleList) {
   const writeArticleListDbStream = fs.createWriteStream(`${dbPath}/${ARTICLE_LIST_FILE_NAME}`);
-  writeArticleListDbStream.end(JSON.stringify(articleList));
+  writeArticleListDbStream.write(JSON.stringify(articleList));
 
   return new Promise((resolve, reject) => {
     writeArticleListDbStream.on('finish', resolve);

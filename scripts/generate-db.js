@@ -1,5 +1,5 @@
-const helper = require('../generator/helper');
-const generator = require('../generator/db');
+const helper = require('../src/generator/helper');
+const generator = require('../src/generator/db');
 
 try {
   console.log('文章数据生成中...');

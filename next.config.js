@@ -1,24 +1,38 @@
+const articleMeta = require('./db/article-meta.json');
+const _ = require('lodash');
+
+/**
+ * 导出所有文章分类和文章详情的路径映射
+ * @returns {} 所有文章分类和文章详情的路径映射对象
+ */
+function exportPostPathMap() {
+  const page = {page: '/'};
+  const pathMap = {
+    '/category/all': page
+  };
+  _.forIn(articleMeta, (val, articleMetaKey) => {
+    const category = articleMeta[articleMetaKey];
+
+    // 生成分类路径
+    pathMap[`/category/${articleMetaKey}`] = page;
+
+    /* 生成文章路径 */
+    category['article_list'].forEach(article => {
+      pathMap[`/category/${articleMetaKey}/p/${article.id}`] = page;
+      pathMap[`/category/all/p/${article.id}`] = page;
+    });
+  });
+
+  return pathMap;
+}
+
 module.exports = {
   exportPathMap: () => {
-    return {
+    const basePathMap = {
       '/': { page: '/' },
-      '/about': { page: '/about' },
+      '/about': { page: '/about' }
+    };
 
-      '/category/X9I_B8oQD': { page: '/'},
-      '/category/lBGgO09j9X': { page: '/'},
-      '/category/0YcMyANhFQ': { page: '/'},
-      '/category/k0DarKg9c': { page: '/'},
-      '/category/all': { page: '/'},
-
-      '/category/X9I_B8oQD/p/ibEJiP-qv': { page: '/'},
-      '/category/X9I_B8oQD/p/VZIuEcM6Vu': { page: '/'},
-      '/category/lBGgO09j9X/p/2JFahoWnmu': { page: '/'},
-      '/category/0YcMyANhFQ/p/HSwYOKmTU2': { page: '/'},
-
-      '/category/all/p/ibEJiP-qv': { page: '/'},
-      '/category/all/p/VZIuEcM6Vu': { page: '/'},
-      '/category/all/p/2JFahoWnmu': { page: '/'},
-      '/category/all/p/HSwYOKmTU2': { page: '/'},
-    }
+    return Object.assign(basePathMap, exportPostPathMap());
   }
 };

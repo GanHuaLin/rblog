@@ -32,7 +32,7 @@ const postPath = `${process.cwd()}/post`;
  * {'3LTPYxNCLR': {ategory_name: 'Program', article_list: [{"id": "VZIuEcM6Vu", "time": "20181225", "title": "Learn Spring"}]}}
  */
 
-function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result={}}) {
+function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result={}}={}) {
   if (fs.existsSync(filePath)) {
     const files = fs.readdirSync(filePath);
     const postList = [];
@@ -126,6 +126,21 @@ function fetchArticleList(articleMeta) {
 }
 
 /**
+ * 同时还获取文章元数据和列表对象
+ * @returns {{articleList, articleMeta: *}} {文章列表对象，文章元数据对象}
+ */
+function fetchArticleMetaAndList() {
+  const articleMeta = this.fetchArticleMeta();
+  this.clearArticleMetaData(articleMeta);
+  const articleList = this.fetchArticleList(articleMeta);
+
+  return {
+    articleMeta,
+    articleList
+  }
+}
+
+/**
  * 根据时间排序文章列表
  * @param articleList 文章列表
  */
@@ -192,6 +207,7 @@ function removeDirectoryFile(path, countLevel=1) {
 module.exports = {
   fetchArticleMeta,
   fetchArticleList,
+  fetchArticleMetaAndList,
   clearArticleMetaData,
   forInArticleList,
   removeDirectoryFile

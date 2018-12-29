@@ -8,7 +8,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "watch": "node ./scripts/watch.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "next": "^7.0.2",
+    "node-watch": "^0.5.9",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.4",

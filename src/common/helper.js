@@ -1,7 +1,7 @@
 const fs = require('fs');
 const _ = require('lodash');
 const moment = require('moment');
-const shortId = require('shortid');
+const shortHash = require('short-hash');
 
 const postPath = `${process.cwd()}/_post`;
 
@@ -32,15 +32,27 @@ const postPath = `${process.cwd()}/_post`;
  * @param currDirName 当前文件夹名称
  * @param result 当前分类下文章信息构建体对象
  * @returns {null} 扫描 /_post 文件夹，构建一个有分类和该分类下所有文章信息的对象并且返回，例如:
- * {'3LTPYxNCLR': {ategory_name: 'Program', article_list: [{"id": "VZIuEcM6Vu", "time": "20181225", "title": "Learn Spring"}]}}
+    [
+      {
+        "category_id": "7c6b63a3",
+        "category_name": "Program",
+        "article_list": [
+          {
+            "id": "eb52d9c3",
+            "time": "20181228",
+            "title": "test"
+          }
+        ]
+      }
+    ]
  */
 
-function fetchOrValidArticleMeta({filePath=postPath, isValid=false, countLevel=1, maxDirLevel=2, currDirName='', result={}}={}) {
+function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result=[]}={}) {
   if (fs.existsSync(filePath)) {
     const files = fs.readdirSync(filePath);
     const postList = [];
-    const categoryId = shortId();
     const categoryName = currDirName;
+    const categoryId = shortHash(categoryName);
 
     for (let i = 0; i < files.length; i++) {
       const currFileName = files[i];
@@ -49,7 +61,7 @@ function fetchOrValidArticleMeta({filePath=postPath, isValid=false, countLevel=1
 
       if (fileStat.isDirectory()) {
         if (countLevel < maxDirLevel) {
-          fetchOrValidArticleMeta({filePath:currFilePath, isValid, countLevel: countLevel + 1, currDirName: currFileName, result});
+          fetchArticleMeta({filePath:currFilePath, countLevel: countLevel + 1, currDirName: currFileName, result});
         } else {
           throw '_post 文件夹下有目录超过两层';
         }
@@ -74,29 +86,26 @@ function fetchOrValidArticleMeta({filePath=postPath, isValid=false, countLevel=1
         } else if (!moment(fileNameDatePartString).isValid()) {
           throw `${currFileName}不合法 markdown 文件名称中日期格式部分格式不正确`;
         } else {
-          if (!isValid) {
-            postList.push({
-              id: shortId(),
-              time: fileNameDatePartString,
-              title: fileNameTitlePartString
-            });
-          }
+          postList.push({
+            id: shortHash(fileNameDatePartString + fileNameTitlePartString),
+            time: fileNameDatePartString,
+            title: fileNameTitlePartString
+          });
         }
       }
     }
 
-    if (!isValid) {
-      if (currDirName) {
-        result[categoryId] = {
-          category_name: categoryName,
-          article_list: postList
-        };
-      }
+    if (currDirName) {
+      result.push({
+        category_id: categoryId,
+        category_name: categoryName,
+        article_list: postList
+      });
     }
 
-    return isValid ? true : result;
+    return result;
   } else {
-    return isValid ? false : null;
+    return null;
   }
 }
 
@@ -138,7 +147,7 @@ function fetchArticleList(articleMeta) {
  * @returns {{articleList, articleMeta: *}} {文章列表对象，文章元数据对象}
  */
 function fetchArticleMetaAndList() {
-  const articleMeta = this.fetchOrValidArticleMeta();
+  const articleMeta = this.fetchArticleMeta();
   this.clearArticleMetaData(articleMeta);
   const articleList = this.fetchArticleList(articleMeta);
 
@@ -190,7 +199,7 @@ function forInArticleList(articleMeta, func) {
 }
 
 module.exports = {
-  fetchOrValidArticleMeta,
+  fetchArticleMeta,
   fetchArticleList,
   fetchArticleMetaAndList,
   clearArticleMetaData,

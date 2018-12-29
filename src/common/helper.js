@@ -2,6 +2,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const moment = require('moment');
 const shortHash = require('short-hash');
+const generator = require('../generate');
 
 const postPath = `${process.cwd()}/_post`;
 
@@ -227,7 +228,18 @@ function existArticleMetaAndListAfter(afterFunc) {
   if (isExistArticleMetaAndListFile()) {
     afterFunc();
   } else {
-    print.info(`请先使用 npm run generate 命令构建文章相关数据`);
+    try {
+      print.info('请稍等，正在生成博客数据');
+      generator.run()
+      .then(() => {
+        print.info('博客数据生成成功');
+        afterFunc();
+      }, err => {
+        print.err(`博客数据生成失败`, err);
+      });
+    } catch (e) {
+      print.err(e);
+    }
   }
 }
 

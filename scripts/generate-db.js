@@ -1,4 +1,4 @@
-const generator = require('../src/generator/db');
+const generator = require('../src/generate');
 
 try {
   console.log('文章数据生成中...');

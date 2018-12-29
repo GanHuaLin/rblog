@@ -13,5 +13,5 @@ try {
     console.log(err);
   });
 } catch (e) {
-  print.err(`${e}`, e);
+  print.err(e);
 }

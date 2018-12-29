@@ -9,5 +9,5 @@ try {
     console.log(`文章数据生成失败，${err}`);
   });
 } catch (e) {
-  console.log(`文章数据生成失败，${e}`);
+  console.log(`${e}`);
 }

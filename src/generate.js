@@ -1,6 +1,6 @@
 const fs = require('fs');
-const helper = require('../common/helper');
-const util = require('../common/util');
+const helper = require('./common/helper');
+const util = require('./common/util');
 
 const dbPath = `${process.cwd()}/db`;
 const ARTICLE_META_FILE_NAME = 'article-meta.json';

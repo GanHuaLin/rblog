@@ -1,9 +1,9 @@
 const _ = require('lodash');
 
-let articleMeta = {};
+let articleMetaData = {};
 
 try {
-  articleMeta = require('./db/article-meta.json');
+  articleMetaData = require('./db/article-meta.json');
 } catch (e) {
   throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
 }
@@ -17,15 +17,14 @@ function exportPostPathMap() {
   const pathMap = {
     '/category/all': page
   };
-  _.forIn(articleMeta, (val, articleMetaKey) => {
-    const category = articleMeta[articleMetaKey];
 
+  articleMetaData.forEach(category => {
     // 生成分类路径
-    pathMap[`/category/${articleMetaKey}`] = page;
+    pathMap[`/category/${category.category_id}`] = page;
 
-    /* 生成文章路径 */
-    category['article_list'].forEach(article => {
-      pathMap[`/category/${articleMetaKey}/p/${article.id}`] = page;
+    // 生成文章路径
+    category.article_list.forEach(article => {
+      pathMap[`/category/${category.category_id}/p/${article.id}`] = page;
       pathMap[`/category/all/p/${article.id}`] = page;
     });
   });

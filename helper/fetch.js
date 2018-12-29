@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import * as COMMON_CONST from '../common/const';
 
-let data = {};
-let articleData = {};
+let articleMetaData = {};
+let articleListData = {};
 
 try {
-  data = require('../db/article-meta.json');
-  articleData = require('../db/article-list.json');
+  articleMetaData = require('../db/article-meta.json');
+  articleListData = require('../db/article-list.json');
 } catch (e) {
+  console.log(e);
   throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
 }
 
@@ -16,26 +17,20 @@ try {
  * @returns {Array} 返回文章分类的数组
  */
 export function findAllCategory() {
-  const categoryList = [];
-  let categoryListCount = 0;
-
-  _.forIn(data, (val, categoryId) => {
-    const currCategory = {};
-    const currCategoryArticleCount = data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length;
-
-    currCategory.id = categoryId;
-    currCategory.name = data[categoryId][COMMON_CONST.CATEGORY_DATA_NAME_TEXT];
-    currCategory.num = currCategoryArticleCount;
-    categoryList.push(currCategory);
-
-    categoryListCount += currCategoryArticleCount;
+  let articleCount = 0;
+  let categoryList = articleMetaData.map(category => {
+    articleCount++;
+    return {
+      id: category[COMMON_CONST.CATEGORY_DATA_ID_TEXT],
+      name: category[COMMON_CONST.CATEGORY_DATA_NAME_TEXT],
+      num: category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length
+    };
   });
 
-  // 特殊，文章数据中没有全部分类，通过程序自行添加，并且永远排第一位
   categoryList.unshift({
     id: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME,
     name: COMMON_CONST.CATEGORY_DATA_ALL_NAME,
-    num: categoryListCount
+    num: articleCount
   });
 
   return categoryList;
@@ -49,20 +44,23 @@ export function findAllCategory() {
  * @returns {Array} 返回文章列表数组
  */
 export function findArticleListByCategory(categoryId) {
-  let list = [];
-
-  if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) {
-    _.forIn(data, (val, currCategoryId) => {
-      data[currCategoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].map(item => {
+  let list =[];
+  for (let i = 0; i < articleMetaData.length; i++) {
+    const category = articleMetaData[i];
+    if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) {
+      category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].forEach(article => {
         list.push({
-          [COMMON_CONST.ARTICLE_DATA_ID_TEXT]: item[COMMON_CONST.ARTICLE_DATA_ID_TEXT],
-          [COMMON_CONST.ARTICLE_DATA_TIME_TEXT]: item[COMMON_CONST.ARTICLE_DATA_TIME_TEXT],
-          [COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]: item[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT],
-        })
+          [COMMON_CONST.ARTICLE_DATA_ID_TEXT]: article[COMMON_CONST.ARTICLE_DATA_ID_TEXT],
+          [COMMON_CONST.ARTICLE_DATA_TIME_TEXT]: article[COMMON_CONST.ARTICLE_DATA_TIME_TEXT],
+          [COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]: article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT],
+        });
       });
-    });
-  } else {
-    list = _.cloneDeep(data[categoryId][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT]);
+    } else {
+      if (category[COMMON_CONST.CATEGORY_DATA_ID_TEXT] === categoryId) {
+        list = _.cloneDeep(category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT]);
+        break;
+      }
+    }
   }
 
   return list;
@@ -74,16 +72,15 @@ export function findArticleListByCategory(categoryId) {
  * @returns {*} 返回文章信息对象
  */
 export function findArticleById(id) {
-  const categoryList = _.keys(data);
+  for (let i = 0; i < articleMetaData.length; i++) {
+    const category = articleMetaData[i];
+    for (let n = 0; n < category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length; n++) {
+      const article = category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT][n];
+      if (article[COMMON_CONST.ARTICLE_DATA_ID_TEXT] === id) {
+        const newArticle = _.cloneDeep(article);
+        newArticle[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT] = articleListData[id];
 
-  for (let i = 0; i < categoryList.length; i++) {
-    for (let n = 0, currArticle = {}; n < data[categoryList[i]][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length; n++) {
-      currArticle = data[categoryList[i]][COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT][n];
-      if (currArticle[COMMON_CONST.ARTICLE_DATA_ID_TEXT] === id) {
-        const article = _.cloneDeep(currArticle);
-        article[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT] = articleData[id];
-
-        return article;
+        return newArticle;
       }
     }
   }

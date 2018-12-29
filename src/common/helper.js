@@ -46,7 +46,6 @@ const postPath = `${process.cwd()}/_post`;
       }
     ]
  */
-
 function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currDirName='', result=[]}={}) {
   if (fs.existsSync(filePath)) {
     const files = fs.readdirSync(filePath);
@@ -63,7 +62,7 @@ function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currD
         if (countLevel < maxDirLevel) {
           fetchArticleMeta({filePath:currFilePath, countLevel: countLevel + 1, currDirName: currFileName, result});
         } else {
-          throw '_post 文件夹下有目录超过两层';
+          throw '_post文件夹下目录不能超过两层';
         }
       } else if (fileStat.isFile()) {
         const markdownFileNameFormatRegExp = /\[(.{1,})\]-\[(\d{8})\]\.md/g; // 递归代码体中引入比如外部模块会有问题
@@ -84,7 +83,7 @@ function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currD
         } else if (!markdownFileNameFormatRegExp.test(currFileName)) {
           throw `${currFileName}不合法 markdown 文件名称不符合规则`;
         } else if (!moment(fileNameDatePartString).isValid()) {
-          throw `${currFileName}不合法 markdown 文件名称中日期格式部分格式不正确`;
+          throw `${currFileName}不合法 markdown 文件名称中日期格式不正确`;
         } else {
           postList.push({
             id: shortHash(fileNameDatePartString + fileNameTitlePartString),
@@ -168,7 +167,19 @@ function sortArticleByTime(articleList) {
     } else if (moment(article.time).isBefore(nextArticle.time)) {
       return 1;
     } else {
+      return -1;
+    }
+  });
+}
+
+function sortCategoryByArticleCount(category) {
+  category.sort((category, nextCategory) => {
+    if (category.article_list.length === nextCategory.article_list.length) {
       return 0;
+    } else if (category.article_list.length < nextCategory.article_list.length) {
+      return 1;
+    } else {
+      return -1;
     }
   });
 }
@@ -176,12 +187,15 @@ function sortArticleByTime(articleList) {
 /**
  * 清洗文章元数据
  * 当前清洗功能
- * 1. 按照时间对文章列表排序，最新的文章排最前
+ * 1. 按照分类中文章的数量进行分类排序，最多的文章排最前
+ * 2. 按照时间对文章列表排序，最新的文章排最前
  * @param articleMeta 文章元数据
  */
 function clearArticleMetaData(articleMeta) {
-  _.forIn(articleMeta, (val, articleMetaKey) => {
-    sortArticleByTime(articleMeta[articleMetaKey].article_list);
+  sortCategoryByArticleCount(articleMeta);
+
+  articleMeta.forEach(category => {
+    sortArticleByTime(category.article_list);
   });
 }
 
@@ -198,10 +212,32 @@ function forInArticleList(articleMeta, func) {
   });
 }
 
+/**
+ * 判断文章元数据和文章列表数据文件是否存在
+ * @returns {boolean} 存在返回 true 否则 false
+ */
+function isExistArticleMetaAndListFile() {
+  const dbPath = `${process.cwd()}/db`;
+  const articleMetaPath = `${dbPath}/article-meta.json`;
+  const articleListPath = `${dbPath}/article-list.json`;
+
+  return fs.existsSync(articleMetaPath) && fs.existsSync(articleListPath);
+}
+
+function existArticleMetaAndListAfter(afterFunc) {
+  if (isExistArticleMetaAndListFile()) {
+    afterFunc();
+  } else {
+    print.info(`请先使用 npm run generate 命令构建文章相关数据`);
+  }
+}
+
 module.exports = {
   fetchArticleMeta,
   fetchArticleList,
   fetchArticleMetaAndList,
   clearArticleMetaData,
   forInArticleList,
+  isExistArticleMetaAndListFile,
+  existArticleMetaAndListAfter,
 };

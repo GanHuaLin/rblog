@@ -32,7 +32,6 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.4",
-    "short-hash": "^1.0.0",
-    "shortid": "^2.2.14"
+    "short-hash": "^1.0.0"
   }
 }

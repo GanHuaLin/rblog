@@ -26,6 +26,22 @@ function removeDirectoryFile(path, ignoreFile=[], countLevel=1) {
   }
 }
 
+/**
+ * 截取文件 path 路径
+ * @param fullFileName 要截取文件的全 path 字符串
+ * @param startPath 要开始截取的 path 字符串
+ * @returns {string} 截取后的字符串
+ */
+function subFullFileNamePath(fullFileName, startPath) {
+  const startPathIndex = fullFileName.indexOf(startPath);
+  if (startPathIndex !== -1) {
+    return fullFileName.substr(startPathIndex, fullFileName.length);
+  }
+
+  return '';
+}
+
 module.exports = {
-  removeDirectoryFile
+  removeDirectoryFile,
+  subFullFileNamePath,
 };

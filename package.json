@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "generate": "node ./scripts/generate-db.js",
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "export": "next build && next export",
-    "watch": "node ./scripts/watch.js"
+    "watch": "node ./scripts/watch.js",
+    "dev": "node ./scripts/dev.js",
+    "export": "node ./scripts/export-blog.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +22,7 @@
   },
   "homepage": "https://github.com/rbackrock/blog-birch#readme",
   "devDependencies": {
+    "commander": "^2.19.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "next": "^7.0.2",

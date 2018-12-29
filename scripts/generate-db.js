@@ -1,13 +1,17 @@
+#!/usr/bin/env node
+
 const generator = require('../src/generate');
+const print = require('../src/common/print');
 
 try {
-  console.log('文章数据生成中...');
+  print.info('请稍等，正在生成博客数据');
   generator.run()
   .then(() => {
-    console.log('文章数据生成成功');
+    print.info('博客数据生成成功');
   }, err => {
-    console.log(`文章数据生成失败，${err}`);
+    print.err(`博客数据生成失败`, err);
+    console.log(err);
   });
 } catch (e) {
-  console.log(`${e}`);
+  print.err(`${e}`, e);
 }

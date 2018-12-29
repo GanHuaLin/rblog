@@ -26,7 +26,6 @@ const postPath = `${process.cwd()}/_post`;
  * 2. null 表示 /post 文件夹有不符合规则文件，包括 markdown 文件名称不符合规则
  *
  * @param filePath 文件路径
- * @param isValid 是否用于验证
  * @param countLevel 文件夹层级
  * @param maxDirLevel 最大文件夹层级
  * @param currDirName 当前文件夹名称

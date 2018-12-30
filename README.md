@@ -114,6 +114,8 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 该项目数据依赖于 `db` 目录下的 `article-meta.json` 和 `article-list.json` 文件，在执行上述 Next.js 提供的命令之前必须保证它们存在而且格式必须正确才可使用
 
+**所以请不要使用上面提到的 Next.js 原生命令**
+
 ## 规则
 
 约定 `_post` 目录下的子级文件夹为文章的分类，称之为分类文件夹，所有 markdown 文件均放在对应的分类文件夹下

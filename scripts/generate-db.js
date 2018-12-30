@@ -10,7 +10,6 @@ try {
     print.info('博客数据生成成功');
   }, err => {
     print.err(`博客数据生成失败`, err);
-    console.log(err);
   });
 } catch (e) {
   print.err(e);

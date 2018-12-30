@@ -1,6 +1,6 @@
 # rblog
 
-这是点子有点烂大街的自动生成静态站点的博客项目，博客整体样式完全参照于锤子便签
+这是点子有点烂大街的博客项目，博客整体样式完全参照于锤子便签
 
 说它烂大街是因为光我知道的，基于不同编程语言用的最多比较有代表的就有 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
 

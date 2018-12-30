@@ -102,7 +102,7 @@ yarn run generate
 npm run generate
 ```
 
-### watch _post 文件夹
+### 监控 _post 文件夹
  
 该命令会 watch `_post` 文件夹，一旦有文件发生新建，删除，修改的操作，自动生成博客数据文件
 

@@ -6,7 +6,8 @@
     "generate": "node ./scripts/generate-db.js",
     "watch": "node ./scripts/watch.js",
     "dev": "node ./scripts/dev.js",
-    "export": "node ./scripts/export-blog.js"
+    "export": "node ./scripts/export-blog.js",
+    "preview": "node ./scripts/build.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "moment": "^2.23.0",
     "next": "^7.0.2",
     "node-watch": "^0.5.9",
+    "opn": "^5.4.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.4",

@@ -52,14 +52,14 @@ yarn run generate
 npm run generate
 ```
 
-### watch 博文文件夹
+### watch _post 文件夹
  
 该命令会 watch `_post` 文件夹，一旦有文件发生新建，删除，修改的操作，自动生成博客数据文件
 
 ```
-yarn run generate 
+yarn run watch 
 # 或者 
-npm run generate
+npm run watch
 ```
 
 ### 导出

@@ -228,6 +228,6 @@ remove---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].
 
 目前解决办法是在 listening 中判断监控目标文件的后缀只能是空字符串或者 `.md` 才可以进行扫描生成写入逻辑
 
-所以，当你使用了 `npm run dev -w` 或者 `npm run watch` 命令发现错误时，优先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
+所以，当你使用了 `npm run dev -w` 或者 `npm run watch` 命令很不凑巧的遇到没有错误说明只有错误堆栈的异常时，可以优先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
 
 

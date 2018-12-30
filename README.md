@@ -40,7 +40,7 @@ yarn run export
 npm run export
 ```
 
-## 使用
+## 完整使用
 
 ### 边写文章边预览
 

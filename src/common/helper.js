@@ -2,8 +2,6 @@ const fs = require('fs');
 const _ = require('lodash');
 const moment = require('moment');
 const shortHash = require('short-hash');
-const generator = require('../generate');
-const print = require('./print');
 
 const postPath = `${process.cwd()}/_post`;
 
@@ -147,9 +145,9 @@ function fetchArticleList(articleMeta) {
  * @returns {{articleList, articleMeta: *}} {文章列表对象，文章元数据对象}
  */
 function fetchArticleMetaAndList() {
-  const articleMeta = this.fetchArticleMeta();
-  this.clearArticleMetaData(articleMeta);
-  const articleList = this.fetchArticleList(articleMeta);
+  const articleMeta = fetchArticleMeta();
+  clearArticleMetaData(articleMeta);
+  const articleList = fetchArticleList(articleMeta);
 
   return {
     articleMeta,
@@ -238,12 +236,13 @@ function existArticleMetaAndListAfter(existAfterFunc, noExistFunc) {
   }
 }
 
-module.exports = {
-  fetchArticleMeta,
-  fetchArticleList,
-  fetchArticleMetaAndList,
-  clearArticleMetaData,
-  forInArticleList,
-  isExistArticleMetaAndListFile,
-  existArticleMetaAndListAfter,
-};
+module.exports.fetchArticleMeta = fetchArticleMeta;
+module.exports.readArticleContent = readArticleContent;
+module.exports.fetchArticleList = fetchArticleList;
+module.exports.fetchArticleMetaAndList = fetchArticleMetaAndList;
+module.exports.sortArticleByTime = sortArticleByTime;
+module.exports.sortCategoryByArticleCount = sortCategoryByArticleCount;
+module.exports.clearArticleMetaData = clearArticleMetaData;
+module.exports.forInArticleList = forInArticleList;
+module.exports.isExistArticleMetaAndListFile = isExistArticleMetaAndListFile;
+module.exports.existArticleMetaAndListAfter = existArticleMetaAndListAfter;

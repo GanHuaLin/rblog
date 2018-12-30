@@ -7,7 +7,5 @@ function err(msg, err) {
   console.log(err);
 }
 
-module.exports = {
-  info,
-  err
-};
+module.exports.info = info;
+module.exports.err = err;

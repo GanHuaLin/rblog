@@ -41,7 +41,5 @@ function subFullFileNamePath(fullFileName, startPath) {
   return '';
 }
 
-module.exports = {
-  removeDirectoryFile,
-  subFullFileNamePath,
-};
+module.exports.removeDirectoryFile = removeDirectoryFile;
+module.exports.subFullFileNamePath = subFullFileNamePath;

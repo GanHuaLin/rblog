@@ -74,7 +74,7 @@ npm run export
 
 ### 预览
 
-该命令可以预览部署到 Web 服务器下的页面效果
+该命令可以预览模拟部署到真实 Web 服务器以后的页面效果
 
 ```
 yarn run preview 

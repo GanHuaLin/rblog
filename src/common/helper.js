@@ -3,6 +3,7 @@ const _ = require('lodash');
 const moment = require('moment');
 const shortHash = require('short-hash');
 const generator = require('../generate');
+const print = require('./print');
 
 const postPath = `${process.cwd()}/_post`;
 
@@ -224,22 +225,16 @@ function isExistArticleMetaAndListFile() {
   return fs.existsSync(articleMetaPath) && fs.existsSync(articleListPath);
 }
 
-function existArticleMetaAndListAfter(afterFunc) {
+/**
+ * 当文章数据文件存在和不存在时进行的操作
+ * @param existAfterFunc 存在时的操作
+ * @param noExistFunc 不存在时的操作
+ */
+function existArticleMetaAndListAfter(existAfterFunc, noExistFunc) {
   if (isExistArticleMetaAndListFile()) {
-    afterFunc();
+    existAfterFunc();
   } else {
-    try {
-      print.info('请稍等，正在生成博客数据');
-      generator.run()
-      .then(() => {
-        print.info('博客数据生成成功');
-        afterFunc();
-      }, err => {
-        print.err(`博客数据生成失败`, err);
-      });
-    } catch (e) {
-      print.err(e);
-    }
+    noExistFunc(existAfterFunc);
   }
 }
 

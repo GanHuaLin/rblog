@@ -15,7 +15,7 @@ exports.run = () => {
   const postPath = `${process.cwd()}/_post`;
   const watcher = watch(postPath, { recursive: true });
 
-  watcher.on('change', function(evt, name) {
+  watcher.on('change', (evt, name) => {
     const fileExtname = path.extname(name);
     if (fileExtname === '' || fileExtname === '.md') { // 简单解决某些文件编辑器会额外对文件名进行操作的问题
       try {

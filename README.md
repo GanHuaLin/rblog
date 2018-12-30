@@ -180,13 +180,9 @@ markdown 文件规则如下：
 
 ## 问题
 
-在对 `_post` 目录添加 watch 功能时，使用了 `node-watch` 库，它的功能和官方提供的类似，但是不管 `node-watch` 还是官方的 watch 都会出现一些问题
+在对 `_post` 目录添加 watch 功能时，使用了 `node-watch` 库，它的功能和官方提供的类似，但是不管 `node-watch` 还是官方的 watch 都会出现一些问题，有些编辑器在修改文件的时候会有其他动作
 
-有些编辑器在修改文件的时候会有其他动作
-
-在都使用 `node-watch` 的情况下
-
-在 WebStorm 中编辑文件，在 watcher 的状态下，修改 `[test]-[20181228].md` 文件然后只保存一次，如果打印 watch 中 listening 中 event 和 name 参数会看到如下信息：
+例如，在使用 `node-watch` 的前提下，WebStorm 中编辑文件，修改 `[test]-[20181228].md` 文件然后只保存一次，打印 listening 中 event 和 name 参数会看到如下信息：
 
 ```
 remove---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].md___jb_tmp___
@@ -196,14 +192,14 @@ remove---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].
 
 只对文件修改保存一次，但是会触发三次 watch listening
 
-在 Visual Studio Code 中编辑文件，即使在没有修改任何内容时，只要保存，就会触发一次 watch listening
+如果使用 Visual Studio Code 编辑文件，即使在没有修改任何内容时，只要保存，就会触发一次 watch listening
 
-Visual Studio Code 除了 watch listening 频率高一点，功能正常
+不过在 Visual Studio Code 中修改文件除了 watch listening 频率高一点，功能正常
 
-但在 WebStorm 中，该项目会扫描读取 `_post` 所有文件夹和文件生成特定结构的 JSON 数据写入 `db` 文件夹中的两个文件中，此时有概率写入错误格式的 JSON 数据，特别是在 markdown 文件中有换行符的情况下
+但在 WebStorm 中，将生成特定结构的 JSON 数据写入 `db` 文件夹中的两个文件时，有概率写入错误格式的 JSON 数据，特别是在 markdown 文件中有换行符的情况下
 
-目前解决办法是在 listening 中判断监控目标文件后缀只能是空字符串或者 `.md` 才能进行扫描生成写入逻辑
+目前解决办法是在 listening 中判断监控目标文件的后缀只能是空字符串或者 `.md` 才可以进行扫描生成写入逻辑
 
-当你发现严重错误时，请先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
+所以，当你使用了 `npm run dev -w` 或者 `npm run watch` 命令发现错误时，优先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
 
 

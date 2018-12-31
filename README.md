@@ -64,7 +64,7 @@ yarn run export
 npm run export
 ```
 
-命令执行成功后，在根目录找到 `out` 文件夹，复制到你喜欢的 Web 服务器对应的 WebRoot 目录下，配置一下就可以使用了
+命令执行成功后，在根目录找到 `out` 文件夹，复制到你喜欢的 Web 服务器对应的 WebRoot 目录下，配置一下就可以了
 
 ## 完整使用
 

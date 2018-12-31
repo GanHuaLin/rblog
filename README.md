@@ -4,7 +4,7 @@
 
 说它烂大街是因为基于不同编程语言用的最多也比较有代表的就有 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
 
-**为什么会有这个项目**
+## 为什么会有这个项目
 
 + 我想要一个尽可能简单好看，并且博客相关所有代码自己编写真正属于自己的博客
 

@@ -5,13 +5,14 @@
   "scripts": {
     "generate": "node ./scripts/generate-db.js",
     "watch": "node ./scripts/watch.js",
-    "dev": "node ./scripts/dev.js",
-    "export": "node ./scripts/export-blog.js",
-    "preview": "node ./scripts/build.js"
+    "dev-pc": "node ./scripts/dev.js -p",
+    "dev-mobile": "node ./scripts/dev.js -m",
+    "export-pc": "node ./scripts/export-blog.js -p",
+    "export-mobile": "node ./scripts/export-blog.js -m",
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rbackrock/blog-birch.git"
+    "url": "git+https://github.com/rbackrock/rblog.git"
   },
   "keywords": [
     "Static blog",
@@ -19,9 +20,9 @@
   ],
   "author": "yhuan",
   "bugs": {
-    "url": "https://github.com/rbackrock/blog-birch/issues"
+    "url": "https://github.com/rbackrock/rblog/issues"
   },
-  "homepage": "https://github.com/rbackrock/blog-birch#readme",
+  "homepage": "https://github.com/rbackrock/rblog#readme",
   "devDependencies": {
     "commander": "^2.19.0",
     "lodash": "^4.17.11",

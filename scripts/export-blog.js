@@ -3,9 +3,16 @@
 const { execSync } = require('child_process');
 const helper = require('../src/common/helper');
 const generator = require('../src/generate');
+const COMMON_CONST = require('./const');
+
+let currentPlatformRootPath = COMMON_CONST.PC_ROOT_PATH;
+
+if (process.argv.indexOf('-m') !== -1) {
+  currentPlatformRootPath = COMMON_CONST.MOBILE_ROOT_PATH;
+}
 
 helper.existArticleMetaAndListAfter(() => {
-  execSync('next build && next export', { stdio: 'inherit' });
+  execSync(`next build ${currentPlatformRootPath} && next export ${currentPlatformRootPath}`, { stdio: 'inherit' });
 }, (existAfterFunc) => {
   try {
     print.info('请稍等，正在生成博客数据');

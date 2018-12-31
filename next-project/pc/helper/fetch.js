@@ -5,8 +5,8 @@ let articleMetaData = {};
 let articleListData = {};
 
 try {
-  articleMetaData = require('../db/article-meta.json');
-  articleListData = require('../db/article-list.json');
+  articleMetaData = require('../../../db/article-meta.json');
+  articleListData = require('../../../db/article-list.json');
 } catch (e) {
   console.log(e);
   throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;

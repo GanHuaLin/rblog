@@ -3,7 +3,7 @@ const _ = require('lodash');
 let articleMetaData = {};
 
 try {
-  articleMetaData = require('./db/article-meta.json');
+  articleMetaData = require('../../db/article-meta.json');
 } catch (e) {
   throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
 }

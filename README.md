@@ -95,7 +95,7 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 **所以请不要直接使用上面提到的 Next.js 原生命令，如果要使用，请先执行 `npm run generate` 命令**
 
-### 使用说明
+## 使用说明
 
 为了方便说明，以下名词解释如下
 

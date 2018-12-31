@@ -103,7 +103,7 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 `移动端 Web 项目目录` 代指根目录下 `./next-project/mobile`
 
-PC 端根目录
+所有命令有一个规律，凡是命令中带有 `-pc` 的都是对 PC 端项目进行操作，凡是命令中带有 `-mobile` 的都是对移动端 Web 项目进行操作
 
 ## 简易使用
 

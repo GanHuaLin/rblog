@@ -85,7 +85,7 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 该项目数据依赖于 `db` 目录下的 `article-meta.json` 和 `article-list.json` 文件，在执行上述 Next.js 提供的命令之前必须保证它们存在而且格式必须正确才可使用
 
-**所以请不要直接使用上面提到的 Next.js 原生命令，至少先成功执行 `npm run generate` 命令**
+**所以请不要直接使用上面提到的 Next.js 原生命令，如果要使用，请先执行 `npm run generate` 命令**
 
 ## 简易使用
 

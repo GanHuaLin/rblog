@@ -77,6 +77,16 @@ Markdown 文件规则如下：
 
 **请务必严格遵守规则**
 
+## 注意
+
+由于该项目获取数据的特殊性，当使用 `npm run dev` 时，如果修改的是关于页面的代码，浏览器会自动刷新，如果是 `_post` 下的文件夹和文件的修改，需要手动刷新浏览器
+
+Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接使用于该项目
+
+该项目数据依赖于 `db` 目录下的 `article-meta.json` 和 `article-list.json` 文件，在执行上述 Next.js 提供的命令之前必须保证它们存在而且格式必须正确才可使用
+
+**所以请不要直接使用上面提到的 Next.js 原生命令，至少先成功执行 `npm run generate` 命令**
+
 ## 简易使用
 
 Step1: 项目刚下载
@@ -125,7 +135,9 @@ npm run dev -w
 + 删除文件夹或者文件(删除文章分类或者删除一篇文章)
 + 修改文件夹或者文件名称(修改文章分类的名称或者修改文章的标题)
 
-**解决办法：直接访问首页，或者点击没有操作过的分类或者文章的链接**
+我尝试过解决这个问题，但是没有成功
+
+**所以，目前的解决办法是手动访问首页，或者点击没有操作过的分类或者文章的链接**
 
 ### 修改页面
 
@@ -176,14 +188,6 @@ yarn run preview
 # 或者 
 npm run preview
 ```
-
-## 注意
-
-Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接使用于该项目
-
-该项目数据依赖于 `db` 目录下的 `article-meta.json` 和 `article-list.json` 文件，在执行上述 Next.js 提供的命令之前必须保证它们存在而且格式必须正确才可使用
-
-**所以请不要直接使用上面提到的 Next.js 原生命令，至少先成功执行 `npm run generate` 命令**
 
 ## 文章数据和结构
 

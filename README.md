@@ -1,4 +1,4 @@
-# :monkey_face: rblog :monkey_face: 
+# :monkey_face: rblog
 
 这是点子有点烂大街的博客项目，博客整体样式完全参照于锤子便签
 

@@ -28,13 +28,21 @@
 
 + 虽然我很努力的在"编"各种理由，但上面一条是认真的
 
+## 贡献
+
+希望大家能够喜欢并且随意使用，但是不接受 pull request 如果你对该项目感兴趣并且有任何新的想法和需求可以自行 fork 之后自由发挥，随意修改 
+
 ## 环境
 
 推荐 Node.js v10.x 以上
 
-## 贡献
+## 简述
 
-希望大家能够喜欢并且随意使用，但是不接受 pull request 如果你对该项目感兴趣并且有任何新的想法和需求可以自行 fork 之后自由发挥，随意修改 
+该博客项目分为 PC 端和移动端的 Web 两个独立的 Next.js 项目，但是共用一套博客数据，两端可以分别开发，部署和导出
+
+`next-project/pc` 为 PC 端的项目
+
+`next-project/mobile` 为移动端的 Web 项目
 
 ## 规则
 
@@ -79,7 +87,7 @@ Markdown 文件规则如下：
 
 ## 注意
 
-由于该项目获取数据的特殊性，当使用 `npm run dev` 时，如果修改的是关于页面的代码，浏览器会自动刷新，如果是 `_post` 下的文件夹和文件的修改，需要手动刷新浏览器
+由于该项目获取数据的特殊性，当使用 `npm run dev-pc` 或者 `npm run dev-mobile` 时，如果修改的是关于页面的代码，浏览器会自动刷新，如果是 `_post` 下的文件夹和文件的修改，需要手动刷新浏览器
 
 Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接使用于该项目
 
@@ -87,22 +95,30 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 **所以请不要直接使用上面提到的 Next.js 原生命令，如果要使用，请先执行 `npm run generate` 命令**
 
+### 使用说明
+
+为了方便说明，以下名词解释如下
+
+`PC 端项目目录` 代指根目录下 `./next-project/pc`
+
+`移动端 Web 项目目录` 代指根目录下 `./next-project/mobile`
+
+PC 端根目录
+
 ## 简易使用
 
-Step1: 项目刚下载
+基于 PC 端举例
+
+Step1: 项目刚下载或者 Clone 完
 
 ```
-yarn
-# 或者 
-npm
+npm i
 ```
 
 Step2: 开始创作
 
 ```
-yarn run dev -w 
-# 或者 
-npm run dev -w
+npm run dev-pc -w
 ```
 
 命令执行成功后，在 `_post` 新建一个文件夹，这就是你的文章分类，再在该文件夹下新建一个文件名为 `[文章标题]-[时间].md` 的文件，打开以后开始尽情创作吧
@@ -110,12 +126,10 @@ npm run dev -w
 Step3: 写完部署
 
 ```
-yarn run export 
-# 或者 
-npm run export
+npm run export-pc
 ```
 
-命令执行成功后，在根目录找到 `out` 文件夹，复制到你喜欢的 Web 服务器对应的 WebRoot 目录下，配置一下就可以了
+命令执行成功后，在 PC 端项目目录下找到 `out` 文件夹，复制到你喜欢的 Web 服务器对应的 WebRoot 目录下，配置一下就可以了
 
 ## 完整使用
 
@@ -124,9 +138,9 @@ npm run export
 该命令另外加了 watch 功能，可以监控 `_post` 目录下所有文件夹和文件的改动，如果发生改动会自动生成博客数据文件，这意味着在 `_post` 下编辑完 Markdown 文件并且保存之后，可以立马在浏览器刷新看到页面效果 
 
 ```
-yarn run dev -w 
+npm run dev-pc -w 
 # 或者 
-npm run dev -w
+npm run dev-mobile -w
 ```
 
 需要注意的是，当你在 `_post` 目录下做如下这些操作之后，刷新浏览器可能会遇到 `404`，原因是分类和文章的唯一标识是依赖于它们的文件名生成的短 hash，而它是页面路由组成的一部分，路由映射关系详见 Next.js 关于 [`next.config.js`](https://nextjs.org/docs/#static-html-export) 的说明，当改变了文件名，数据文件已经更新，但是你正在浏览的页面 URL 可能没有及时改变，所以导致了 `404` 不过只是编辑 Markdown 文件内容则完全没有影响。使用导出命令导出的静态页面不会出现这样的问题
@@ -141,12 +155,12 @@ npm run dev -w
 
 ### 修改页面
 
-该命令等同于 Next.js 的 `next` 命令，但在 `next` 命令之前额外做了一些操作
+该命令效果等同于 Next.js 的 `next dev` 命令，但在 `next` 命令之前额外做了一些操作
 
 ```
-yarn run dev 
+npm run dev-pc 
 # 或者 
-npm run dev
+npm run dev-mobile
 ```
 
 ### 生成博客数据
@@ -154,8 +168,6 @@ npm run dev
 该命令会根据 `_post` 文件夹下的所有文件夹和文件自动生成博客数据文件写入 `db` 目录，页面数据来源于 `db` 目录的两个文件
 
 ```
-yarn run generate 
-# 或者 
 npm run generate
 ```
 
@@ -164,29 +176,17 @@ npm run generate
 该命令会 watch `_post` 文件夹，一旦有文件发生新建，删除，修改的操作，自动生成博客数据文件
 
 ```
-yarn run watch 
-# 或者 
 npm run watch
 ```
 
 ### 导出
 
-该命令会导出整个博客静态项目，成功导出后位于默认的 `out` 目录，此时可以部署在任何你喜欢的 Web 服务器上
+该命令会导出你指定的 PC 端或者移动 Web 端的静态项目，成功导出后位于对应端下的的 `out` 目录，此时可以部署在任何你喜欢的 Web 服务器上
 
 ```
-yarn run export 
+npm run export-pc 
 # 或者 
-npm run export
-```
-
-### 预览
-
-该命令可以预览模拟部署到真实 Web 服务器以后的页面效果
-
-```
-yarn run preview 
-# 或者 
-npm run preview
+npm run export-mobile
 ```
 
 ## 文章数据和结构

@@ -8,7 +8,7 @@
     "dev-pc": "node ./scripts/dev.js -p",
     "dev-mobile": "node ./scripts/dev.js -m",
     "export-pc": "node ./scripts/export-blog.js -p",
-    "export-mobile": "node ./scripts/export-blog.js -m",
+    "export-mobile": "node ./scripts/export-blog.js -m"
   },
   "repository": {
     "type": "git",

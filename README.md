@@ -2,7 +2,7 @@
 
 这是点子有点烂大街的博客项目，博客整体样式完全参照于锤子便签
 
-说它烂大街是因为基于不同编程语言用的最多也比较有代表的就有 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
+说它烂大街是因为基于不同编程语言，一模一样的功能，用的最多也比较有代表的已经有 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
 
 ## 为什么会有这个项目
 

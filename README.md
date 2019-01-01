@@ -16,8 +16,6 @@
 
 + 我想只用 JavaScript 这一种语言实现我的博客，我想用 ES6 的语法来写代码，我想用 React.js 中组件化的方式来组织我的页面结构
 
-+ 我不会 Ruby 不会 Go
-
 + 我想实现喜欢的博客样式而不是只能用其他人的主题
 
 + Hexo 的自定义主题也考虑过，由于有一些限制和规则而且需要使用 ejs 之类的 Dynamic Web 技术不是我想要的
@@ -25,8 +23,6 @@
 + 我觉得再好的富文本编辑器可以解决较为复杂的文本编辑需要，却无法给你带来纯字符编辑的乐趣
 
 + 我想要了解 Next.js
-
-+ 虽然我很努力的在"编"各种理由，但上面一条是认真的
 
 ## 贡献
 
@@ -99,9 +95,9 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 为了方便说明，以下名词解释如下
 
-`PC 端项目目录` 代指根目录下 `./next-project/pc`
+`PC 端项目目录` 代指根目录下 `/next-project/pc`
 
-`移动端 Web 项目目录` 代指根目录下 `./next-project/mobile`
+`移动端 Web 项目目录` 代指根目录下 `/next-project/mobile`
 
 凡是命令中带有 `-pc` 的都是对 PC 端项目进行操作，凡是命令中带有 `-mobile` 的都是对移动端 Web 项目进行操作
 
@@ -121,7 +117,7 @@ Step2: 开始创作
 npm run dev-pc -w
 ```
 
-命令执行成功后，在 `_post` 新建一个文件夹，这就是你的文章分类，再在该文件夹下新建一个文件名为 `[文章标题]-[时间].md` 的文件，打开以后开始尽情创作吧
+命令执行成功后，在 `_post` 新建一个文件夹，这就是你的文章分类，然后在该文件夹下新建一个文件，文件名为 `[文章标题]-[时间].md`，打开以后开始尽情创作吧
 
 Step3: 写完部署
 
@@ -240,6 +236,8 @@ npm run export-mobile
 }
 ```
 
+**`article-meta.json` 和 `article-list.json` 文件为程序自动生成而来，请不要手动修改**
+
 ## 问题
 
 在对 `_post` 目录添加 watch 功能时，使用了 `node-watch` 库，它的功能和官方提供的类似，但是不管 `node-watch` 还是官方的 watch 都会出现一些问题，有些编辑器在修改文件的时候会有其他动作
@@ -252,15 +250,15 @@ update---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].
 remove---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].md___jb_old___
 ```
 
-只对文件修改保存一次，但是会触发三次 watch listening
+只对文件修改保存一次，但是会触发三次监听回调
 
-如果使用 Visual Studio Code 编辑文件，即使在没有修改任何内容时，只要保存，就会触发一次 watch listening
+如果使用 Visual Studio Code 编辑文件，即使在没有修改任何内容时，只要保存，就会触发一次监听回调
 
-不过在 Visual Studio Code 中修改文件除了 watch listening 频率高一点，功能正常
+不过在 Visual Studio Code 中修改文件除了监听回调频率高一点，功能正常
 
 但在 WebStorm 中，将生成特定结构的 JSON 数据写入 `db` 文件夹中的两个文件时，有概率写入错误格式的 JSON 数据，特别是在 Markdown 文件中有换行符的情况下
 
-目前解决办法是在 listening 中判断监控目标文件的后缀只能是空字符串或者 `.md` 才可以进行扫描生成写入逻辑
+目前解决办法是在监听回调中判断监控目标文件的后缀只能是空字符串或者 `.md` 才进行扫描生成写入逻辑
 
 所以，当你使用了 `npm run dev -w` 或者 `npm run watch` 命令很不凑巧的遇到没有错误说明只有错误堆栈的异常时，可以优先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
 

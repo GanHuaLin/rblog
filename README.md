@@ -40,7 +40,7 @@
 
 `next-project/mobile` 为移动端的 Web 项目
 
-## 规则
+## 写作规则
 
 约定所有文章均为 Markdown 编写，文件名后缀为 `.md`
 

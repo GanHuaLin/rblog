@@ -1,7 +1,6 @@
 import React from 'react'
 import App, { Container } from 'next/app'
-import Layout from '../components/Layout';
-import Header from '../components/Header';
+import Head from 'next/head'
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -19,11 +18,14 @@ export default class MyApp extends App {
 
     return (
       <Container>
-        <Layout>
-          <Header />
-          <Component {...pageProps} />
-        </Layout>
-
+        <Head>
+          <title>rbackrock`s blog</title>
+          <meta name="keywords" content="rbackrock, rbackrock`s blog, blog, 博客" />
+          <meta content="这是 rbackrock 用来记录生活和学习的博客。" name="description" />
+          <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+          <meta name="viewport" content="width=device-width" />
+        </Head>
+        <Component {...pageProps} />
         <style jsx global>{`
           /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -378,6 +380,36 @@ export default class MyApp extends App {
 
           [hidden] {
             display: none;
+          }
+
+          /** --- **/
+          body, html {
+            color: rgb(102, 102, 102);
+            font-family: Helvetica,"Microsoft Yahei",ST-Heiti,"Apple Color Emoji";
+            font-size: 14px;
+            min-width: 1000px;
+            height: 100%;
+            position: relative;
+          }
+
+          a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+          }
+
+          body {
+            line-height: 1;
+            background: #F0DAB3 url(/static/img/note_bg.jpg);
+            background-repeat: repeat;
+            color: #434343;
+          }
+
+          ul, ol {
+            list-style-type: none;
           }
       `}</style>
       </Container>

@@ -17,6 +17,7 @@ export default () => (
     <style jsx>{`
       header {
         height: 5%;
+        min-height: 66px;
         display: flex;
         align-items: center;
 

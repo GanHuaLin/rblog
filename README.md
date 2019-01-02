@@ -203,7 +203,7 @@ npm run export-mobile
     "article_list": [
       {
         "id": "31d586af",
-        "time": "20181227",
+        "date": "20181227",
         "title": "Learn javascript"
       }
     ]
@@ -221,7 +221,7 @@ npm run export-mobile
 
 某一分类下所有文章信息字段说明：
 + `id` 文章唯一标识，由 Markdown 文件名 `hash` 生成
-+ `time` 文章发表时间，由 Markdown 文件名截取而来
++ `date` 文章发表时间，由 Markdown 文件名截取而来
 + `title` 文章标题，由 Markdown 文件名截取而来
 
 ### `article-list.json`

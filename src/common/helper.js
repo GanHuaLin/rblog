@@ -38,7 +38,7 @@ const postPath = `${process.cwd()}/_post`;
         "article_list": [
           {
             "id": "eb52d9c3",
-            "time": "20181228",
+            "date": "20181228",
             "title": "test"
           }
         ]
@@ -86,7 +86,7 @@ function fetchArticleMeta({filePath=postPath, countLevel=1, maxDirLevel=2, currD
         } else {
           postList.push({
             id: shortHash(fileNameDatePartString + fileNameTitlePartString),
-            time: fileNameDatePartString,
+            date: fileNameDatePartString,
             title: fileNameTitlePartString
           });
         }
@@ -134,7 +134,7 @@ function readArticleContent(articlePath) {
 function fetchArticleList(articleMeta) {
   const articleList = {};
   forInArticleList(articleMeta, (val, articleMetaKey, article) => {
-    articleList[article.id] = readArticleContent(`${postPath}/${articleMeta[articleMetaKey]['category_name']}/[${article.title}]-[${article.time}].md`);
+    articleList[article.id] = readArticleContent(`${postPath}/${articleMeta[articleMetaKey]['category_name']}/[${article.title}]-[${article.date}].md`);
   });
 
   return articleList;
@@ -159,11 +159,11 @@ function fetchArticleMetaAndList() {
  * 根据时间排序文章列表
  * @param articleList 文章列表
  */
-function sortArticleByTime(articleList) {
+function sortArticleByDate(articleList) {
   articleList.sort((article, nextArticle) => {
-    if (article.time === nextArticle.time) {
+    if (article.date === nextArticle.date) {
       return 0;
-    } else if (moment(article.time).isBefore(nextArticle.time)) {
+    } else if (moment(article.date).isBefore(nextArticle.date)) {
       return 1;
     } else {
       return -1;
@@ -194,7 +194,7 @@ function clearArticleMetaData(articleMeta) {
   sortCategoryByArticleCount(articleMeta);
 
   articleMeta.forEach(category => {
-    sortArticleByTime(category.article_list);
+    sortArticleByDate(category.article_list);
   });
 }
 
@@ -240,7 +240,7 @@ module.exports.fetchArticleMeta = fetchArticleMeta;
 module.exports.readArticleContent = readArticleContent;
 module.exports.fetchArticleList = fetchArticleList;
 module.exports.fetchArticleMetaAndList = fetchArticleMetaAndList;
-module.exports.sortArticleByTime = sortArticleByTime;
+module.exports.sortArticleByDate = sortArticleByDate;
 module.exports.sortCategoryByArticleCount = sortCategoryByArticleCount;
 module.exports.clearArticleMetaData = clearArticleMetaData;
 module.exports.forInArticleList = forInArticleList;

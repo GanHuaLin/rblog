@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/rbackrock/rblog#readme",
   "devDependencies": {
+    "better-scroll": "^1.13.2",
     "commander": "^2.19.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
@@ -32,6 +33,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.4",
+    "react-syntax-highlighter": "^10.1.2",
     "short-hash": "^1.0.0"
   }
 }

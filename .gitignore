@@ -18,7 +18,9 @@ yarn-error.log*
 yarn.lock
 yarn-error.log
 .idea
-.next*
 test.js
 /tmp
+.next*
+/.next*
 out*
+/out*

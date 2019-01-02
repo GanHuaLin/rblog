@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 let articleMetaData = {};
 
 try {

@@ -1,21 +1,17 @@
-import Head from 'next/head';
-
-import Container from '../components/Container';
-import Category from '../components/Category';
-import ArticleList from '../components/ArticleList';
-import Article from '../components/Article';
+import Layout from '../components/Layout';
+import NoteContent from '../components/NoteContent';
 import {fetch, url} from '../helper'
 import * as COMMON_CONST from '../common/const';
 
 const Index = (props) => (
-  <Container>
-    <Head>
-      <title>rbackrock`s blog</title>
-    </Head>
-    <Category categoryList={props.categoryList} pathParams={props.pathParams} />
-    <ArticleList articleList={props.articleList} pathParams={props.pathParams} />
-    <Article article={props.article} pathParams={props.pathParams} />
-  </Container>
+  <Layout>
+    <NoteContent
+      categoryList={props.categoryList}
+      articleList={props.articleList}
+      article={props.article}
+      pathParams={props.pathParams}
+    />
+  </Layout>
 );
 
 /**
@@ -50,7 +46,7 @@ Index.getInitialProps = ({asPath}) => {
     article = fetch.findArticleById(articleId);
   } else {
     if (articleList.length > 0) {
-      article = fetch.findArticleById(articleList[0]['id']);
+      article = fetch.findArticleById(articleList[0][COMMON_CONST.ARTICLE_DATA_ID_TEXT]);
     }
   }
 

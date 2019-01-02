@@ -17,20 +17,22 @@ try {
  * @returns {Array} 返回文章分类的数组
  */
 export function findAllCategory() {
-  let articleCount = 0;
+  let articleTotalCount = 0;
   let categoryList = articleMetaData.map(category => {
-    articleCount++;
+    const articleListLength = category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length;
+    articleTotalCount += articleListLength;
+
     return {
-      id: category[COMMON_CONST.CATEGORY_DATA_ID_TEXT],
-      name: category[COMMON_CONST.CATEGORY_DATA_NAME_TEXT],
-      num: category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].length
+      [COMMON_CONST.CATEGORY_DATA_ID_TEXT]: category[COMMON_CONST.CATEGORY_DATA_ID_TEXT],
+      [COMMON_CONST.CATEGORY_DATA_NAME_TEXT]: category[COMMON_CONST.CATEGORY_DATA_NAME_TEXT],
+      [COMMON_CONST.CATEGORY_DATA_ARTICLE_NUM_TEXT]: articleListLength
     };
   });
 
   categoryList.unshift({
-    id: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME,
-    name: COMMON_CONST.CATEGORY_DATA_ALL_NAME,
-    num: articleCount
+    [COMMON_CONST.CATEGORY_DATA_ID_TEXT]: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME,
+    [COMMON_CONST.CATEGORY_DATA_NAME_TEXT]: COMMON_CONST.CATEGORY_DATA_ALL_NAME,
+    [COMMON_CONST.CATEGORY_DATA_ARTICLE_NUM_TEXT]: articleTotalCount
   });
 
   return categoryList;
@@ -51,7 +53,7 @@ export function findArticleListByCategory(categoryId) {
       category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].forEach(article => {
         list.push({
           [COMMON_CONST.ARTICLE_DATA_ID_TEXT]: article[COMMON_CONST.ARTICLE_DATA_ID_TEXT],
-          [COMMON_CONST.ARTICLE_DATA_TIME_TEXT]: article[COMMON_CONST.ARTICLE_DATA_TIME_TEXT],
+          [COMMON_CONST.ARTICLE_DATA_DATE_TEXT]: article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT],
           [COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]: article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT],
         });
       });

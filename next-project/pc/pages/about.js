@@ -1,3 +1,11 @@
 export default () => (
-  <div>About</div>
+  <div>
+    About
+
+    <style jsx>{`
+      div {
+        height: 95%;
+      }
+    `}</style>
+  </div>
 );

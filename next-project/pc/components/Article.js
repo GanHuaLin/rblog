@@ -12,8 +12,6 @@ class Article extends Component {
     this.scrollContainerRef = React.createRef();
     this.contentRef = React.createRef();
     this.scroll = null;
-
-    console.log(props.article)
   }
 
   componentDidMount() {
@@ -175,7 +173,7 @@ class Article extends Component {
         .md-content:after {
           display: block;
           content: ' ';
-          height: 50px;
+          height: 150px;
         }
 
         /* --- markdown 样式 --- */

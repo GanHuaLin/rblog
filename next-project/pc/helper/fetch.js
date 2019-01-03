@@ -70,7 +70,7 @@ export function findArticleListByCategory(categoryId) {
 
 /**
  * 通过文章 id 获取文章信息
- * @param id 文章标题
+ * @param id 文章标题 id
  * @returns {*} 返回文章信息对象
  */
 export function findArticleById(id) {

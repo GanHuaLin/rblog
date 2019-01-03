@@ -47,11 +47,13 @@ class CodeBlock extends Component {
               flex: 1,
               border: 'none',
               boxShadow: '0 3px 8px rgba(69,18,10,.4)',
+              fontSize: '16px',
             }}
             codeTagProps={{
               style: {
                 display: 'inline-block',
-                padding: '0 1.6em 0 0',
+                padding: '0 0.6em 0 0',
+                // marginRight: '1em'
               }
             }}
           >{this.props.value}
@@ -63,6 +65,8 @@ class CodeBlock extends Component {
             display: flex;
             position: relative;
             align-items:center;
+            width: 75%;
+            margin: 0 auto;
           }
 
           .wrapper {

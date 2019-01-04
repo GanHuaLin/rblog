@@ -119,8 +119,8 @@ class Category extends Component {
           }
 
           .category-info {
-            margin-left: 20px;
-            margin-right: 20px;
+            margin-left: 15px;
+            margin-right: 15px;
             height: 49px;
             line-height: 49px;
             color: #635752;
@@ -132,7 +132,7 @@ class Category extends Component {
             height: 30px;
             line-height: 30px;
             margin-top: 10px;
-            max-width: 100%;
+            max-width: 80%;
             overflow: hidden;
             vertical-align: top;
             font-size: 14px;

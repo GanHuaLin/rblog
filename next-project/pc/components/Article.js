@@ -4,10 +4,15 @@ import ReactMarkdown from 'react-markdown';
 import BScroll from "better-scroll";
 
 import CodeBlock from './markdown/CodeBlock';
+import LoadingTips from './LoadingTips';
 
 class Article extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      showLoading: true
+    };
 
     this.scrollContainerRef = React.createRef();
     this.contentRef = React.createRef();
@@ -23,13 +28,11 @@ class Article extends Component {
       },
       bounce: false,
       bindToWrapper: true,
-      // preventDefault: false,
-      // autoBlur: false,
-      // disableMouse: true,
     });
 
     this.toggleScrollBar(false, false);
     if (this.contentRef.current) {
+      this.setShowLoadingStatus(false);
       this.contentRef.current.style.opacity = 1;
     }
 
@@ -56,6 +59,12 @@ class Article extends Component {
   onArticleMouseLeaveHandle = () => {
     this.toggleScrollBar(false);
   };
+
+  setShowLoadingStatus(show) {
+    this.setState({
+      showLoading: show
+    });
+  }
 
   toggleScrollBar(toggle, isTransition=true) {
     if (this.scrollContainerRef.current) {
@@ -117,6 +126,10 @@ class Article extends Component {
   render() {
     return (
       <div className='article'>
+        {
+          this.state.showLoading ? <LoadingTips /> : null
+        }
+
         <div className='wrapper' ref={this.scrollContainerRef} onMouseEnter={this.onArticleMouseEnterHandle} onMouseLeave={this.onArticleMouseLeaveHandle}>
           {
             <div className="container" >
@@ -144,6 +157,7 @@ class Article extends Component {
 
         <style jsx>{`
         .article {
+          position: relative;
           flex: 61;
           height: 100%;
         }

@@ -33,7 +33,7 @@ class Article extends Component {
     this.toggleScrollBar(false, false);
     if (this.contentRef.current) {
       this.setShowLoadingStatus(false);
-      this.contentRef.current.style.opacity = 1;
+      this.setShowArticle(true);
     }
 
     this.recalculateImageHeight();
@@ -41,7 +41,7 @@ class Article extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.contentRef.current) {
-      this.contentRef.current.style.opacity = 1;
+      this.setShowArticle(true);
       this.recalculateImageHeight();
     }
   }
@@ -59,6 +59,10 @@ class Article extends Component {
   onArticleMouseLeaveHandle = () => {
     this.toggleScrollBar(false);
   };
+
+  setShowArticle(show) {
+    this.contentRef.current.style.opacity = show ? 1 : 0;
+  }
 
   setShowLoadingStatus(show) {
     this.setState({

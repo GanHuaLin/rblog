@@ -329,7 +329,7 @@ class Article extends Component {
           color: #645647;
         }
 
-        /* table #dad0bd */
+        /* table */
         .md-content :global(table) {
           width: 100%;
           margin: 50px 0;
@@ -339,13 +339,13 @@ class Article extends Component {
         }
 
         .md-content :global(table tr th) {
-          border: 1px solid #dad0bd;
+          border: 1px solid #ece6df;
           border-top: none;
           border-bottom: none;
         }
 
         .md-content :global(table tr td) {
-          border: 1px solid #dad0bd;
+          border: 1px solid #ece6df;
           border-top: none;
           border-bottom: none;
         }

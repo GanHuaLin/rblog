@@ -9,7 +9,7 @@ export default () => (
       .motto {
         display: inline-block;
         height: 1px;
-        width: 15px;
+        width: 13px;
         border-bottom: 2px solid;
         opacity: 1;
 

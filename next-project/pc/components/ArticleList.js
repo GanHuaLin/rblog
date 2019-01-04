@@ -140,6 +140,7 @@ class ArticleList extends Component {
           .article-info .title {
             line-height: 20px;
             height: 20px;
+            padding-right: 20px;
             padding-left: 20px;
             overflow: hidden;
             cursor: default;

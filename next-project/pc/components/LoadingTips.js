@@ -18,7 +18,7 @@ export default () => (
         font-size: 36px;
         color: #635753;
 
-        animation: blink 0.9s infinite;
+        animation: blink 1.3s infinite;
       }
 
       @keyframes blink {

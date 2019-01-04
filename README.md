@@ -93,6 +93,12 @@ Markdown 文件规则如下：
 
 + 分割线没有任何效果
 
++ 不支持流程图
+
++ 不支持甘特图
+
+当然，如果你愿意可以自己添加渲染
+
 ### 关于渲染
 
 渲染 Markdown 使用了 `react-markdown` 如果要修改和设置 Markdown 的渲染，请参考阅读[官方文档](https://github.com/rexxars/react-markdown)

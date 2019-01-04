@@ -33,13 +33,13 @@ class Article extends Component {
       this.contentRef.current.style.opacity = 1;
     }
 
-    // 重新计算图片的高度
     this.recalculateImageHeight();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.contentRef.current) {
       this.contentRef.current.style.opacity = 1;
+      this.recalculateImageHeight();
     }
   }
 
@@ -74,6 +74,7 @@ class Article extends Component {
     return window.Math.floor(containerRowCount * rowHeight) + 'px';
   };
 
+  // 重新计算图片的高度
   recalculateImageHeight = () => {
     const originImages = this.scrollContainerRef.current.querySelectorAll('img');
     const newImageLoadPromise = [];

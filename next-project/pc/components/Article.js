@@ -162,7 +162,7 @@ class Article extends Component {
           padding: 0 30px 0px 50px;
           color: #645647;
           line-height: 50px;
-          font-size: 20px;
+          font-size: 17px;
           background: url(/static/img/note_detail_edge.jpg) repeat-y;
         }
 
@@ -180,7 +180,7 @@ class Article extends Component {
 
         /* h1 ~ h6 */
         .md-content :global(h1) {
-          font-size: 30px;
+          font-size: 27px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -189,7 +189,7 @@ class Article extends Component {
         }
 
         .md-content :global(h2) {
-          font-size: 28px;
+          font-size: 25px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -198,7 +198,7 @@ class Article extends Component {
         }
 
         .md-content :global(h3) {
-          font-size: 26px;
+          font-size: 23px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -207,7 +207,7 @@ class Article extends Component {
         }
 
         .md-content :global(h4) {
-          font-size: 26px;
+          font-size: 23px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -216,7 +216,7 @@ class Article extends Component {
         }
 
         .md-content :global(h5) {
-          font-size: 26px;
+          font-size: 23px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -225,7 +225,7 @@ class Article extends Component {
         }
 
         .md-content :global(h6) {
-          font-size: 26px;
+          font-size: 23px;
           font-weight: 400;
           color: #645647;
           line-height: 50px;
@@ -240,7 +240,7 @@ class Article extends Component {
 
         /* blockquote */
         .md-content :global(blockquote) {
-          font-size: 23px;
+          font-size: 20px;
           line-height: 50px;
           margin: 0;
           padding-left: 38px;
@@ -277,7 +277,7 @@ class Article extends Component {
           position: relative;
           list-style: none;
           word-break: break-all;
-          font-size: 24px;
+          font-size: 21px;
         }
 
         .md-content :global(ol) {
@@ -288,7 +288,7 @@ class Article extends Component {
           position: relative;
           list-style: none;
           word-break: break-all;
-          font-size: 24px;
+          font-size: 21px;
         }
 
         .md-content :global(ol li) {

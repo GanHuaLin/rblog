@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 import * as COMMON_CONST from '../common/const';
 
 let articleMetaData = {};
@@ -49,7 +50,7 @@ export function findArticleListByCategory(categoryId) {
   let list =[];
   for (let i = 0; i < articleMetaData.length; i++) {
     const category = articleMetaData[i];
-    if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) {
+    if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) { // 全部分类
       category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT].forEach(article => {
         list.push({
           [COMMON_CONST.ARTICLE_DATA_ID_TEXT]: article[COMMON_CONST.ARTICLE_DATA_ID_TEXT],
@@ -57,7 +58,18 @@ export function findArticleListByCategory(categoryId) {
           [COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]: article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT],
         });
       });
-    } else {
+
+      // 全部分类比较特殊，还需要再次对文章列表进行日期排序
+      list.sort((article, nextArticle) => {
+        if (article.date === nextArticle.date) {
+          return 0;
+        } else if (moment(article.date).isBefore(nextArticle.date)) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else { // 指定分类
       if (category[COMMON_CONST.CATEGORY_DATA_ID_TEXT] === categoryId) {
         list = _.cloneDeep(category[COMMON_CONST.CATEGORY_DATA_ARTICLE_LIST_TEXT]);
         break;

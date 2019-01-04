@@ -22,7 +22,7 @@ export default class MyApp extends App {
           <title>rbackrock`s blog</title>
           <meta name="keywords" content="rbackrock, rbackrock`s blog, blog, 博客" />
           <meta content="这是 rbackrock 用来记录生活和学习的博客。" name="description" />
-          <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
           <meta name="viewport" content="width=device-width" />
         </Head>
         <Component {...pageProps} />

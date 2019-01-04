@@ -88,6 +88,7 @@ class Article extends Component {
   };
 
   // 重新计算图片的高度
+  // TODO - 目前其实也没使用，留着吧，以后如果有需要再修改
   recalculateImageHeight = () => {
     const originImages = this.scrollContainerRef.current.querySelectorAll('img');
     const newImageLoadPromise = [];

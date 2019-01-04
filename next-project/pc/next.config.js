@@ -31,12 +31,14 @@ function exportPostPathMap() {
 }
 
 module.exports = {
-  exportPathMap: () => {
+  exportPathMap: async (defaultPathMap) => {
+    defaultPathMap['/404.html'] = { page: '/_error' };
+
     const basePathMap = {
       '/': { page: '/' },
       '/about': { page: '/about' }
     };
 
-    return Object.assign(basePathMap, exportPostPathMap());
+    return Object.assign({}, defaultPathMap, basePathMap, await exportPostPathMap());
   }
 };

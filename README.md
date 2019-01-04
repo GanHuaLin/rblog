@@ -10,7 +10,9 @@
 
 + 我觉得用 Markdown 写文章很酷，文章即数据，数据即文件，博客的核心数据是 Markdown 文件，而不是在数据库里被富文本编辑器处理过的字符串。你甚至不用做任何事或者只进行少量修改，就可以直接把你的 Markdown 文章迁移在笔记软件，或者 Github 和简书这样的网站中
 
-+ 所用技术和自己想要的功能契合的刚刚好，既不复杂，也不简陋，打蚊子真正没用高射炮
++ 我觉得再好的富文本编辑器可以解决较为复杂的文本编辑需要，却无法给你带来纯字符编辑的乐趣
+
++ 所决定实现的技术和自己想要的功能契合的刚刚好，既不复杂，也不简陋，打蚊子真正没用高射炮
 
 + 我想要一个简单好看，自己一手打造的博客 
 
@@ -19,8 +21,6 @@
 + 我想实现喜欢的博客样式而不是只能用其他人的主题
 
 + Hexo 的自定义主题也考虑过，由于有一些限制和规则而且需要使用 ejs 之类的 Dynamic Web 技术不是我想要的
-
-+ 我觉得再好的富文本编辑器可以解决较为复杂的文本编辑需要，却无法给你带来纯字符编辑的乐趣
 
 + 我想要了解 Next.js
 
@@ -32,6 +32,8 @@
 
 推荐 Node.js v10.x 以上
 
+使用现代浏览器，如 Chrome Firefox Safari 最次怎么也得用 Edge 吧
+
 ## 简述
 
 该博客项目分为 PC 端和移动端的 Web 两个独立的 Next.js 项目，但是共用一套博客数据，两端可以分别开发，部署和导出
@@ -40,7 +42,7 @@
 
 `next-project/mobile` 为移动端的 Web 项目
 
-## 写作规则
+## 使用规则
 
 约定所有文章均为 Markdown 编写，文件名后缀为 `.md`
 
@@ -80,6 +82,34 @@ Markdown 文件规则如下：
 ```
 
 **请务必严格遵守规则**
+
+## Markdown
+
+支持主流 Markdown 语法，其中对一些语法的表现做出了修改
+
++ 其中 h3 h4 h5 h6 标题表现一致
+
++ 有序列表和无序列表表现一致
+
++ 分割线没有任何效果
+
+### 关于渲染
+
+渲染 Markdown 使用了 `react-markdown` 如果要修改和设置 Markdown 的渲染，请参考阅读[官方文档](https://github.com/rexxars/react-markdown)
+
+### 关于展示代码块
+
+Markdown 中展示代码块用了 `react-syntax-highlighter` 同样，如下要设置或修改，请参考阅读[官方文档](https://github.com/conorhastings/react-syntax-highlighter)
+
+其中对编程语言支持的语法高亮列表请参考[这里](https://github.com/conorhastings/react-syntax-highlighter/blob/master/AVAILABLE_LANGUAGES_PRISM.MD)
+
+举个例子，如果要展示 js 的代码，那么在列表中查询到 js 的完整名称为 `javascript` ，那么 Markdown 语法应该这样写：
+
+\```javascript
+
+console.log('Hello world');
+
+\```
 
 ## 注意
 
@@ -148,6 +178,8 @@ npm run dev-mobile -w
 我尝试过解决这个问题，但是没有成功
 
 **所以，目前的解决办法是手动访问首页，或者点击没有操作过的分类或者文章的链接**
+
+**这个小问题，这是在修改分类文件夹和文章名称的时候会出现，不会影响导出**
 
 ### 修改页面
 

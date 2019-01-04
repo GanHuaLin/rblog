@@ -4,7 +4,7 @@ export default () => (
   <header>
     <div className="left">
       <Link href={'/'}>
-        <h1 className='name'>rbackrock`s 的博客</h1>
+        <h1 className='name'><a href="" className='link'>rbackrock`s 的博客</a></h1>
       </Link>
     </div>
     <div className="right">
@@ -17,7 +17,7 @@ export default () => (
     <style jsx>{`
       header {
         height: 5%;
-        min-height: 66px;
+        min-height: 45px;
         display: flex;
         align-items: center;
 
@@ -40,6 +40,11 @@ export default () => (
 
       .name {
         cursor: pointer;
+      }
+
+      .link {
+        color: #fff;
+        text-decoration: none;
       }
 
       .right {

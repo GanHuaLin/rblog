@@ -17,7 +17,7 @@ class Error extends React.Component {
     return (
       <div className="container">
         <PaperContainer>
-          <p>Balls,&nbsp;发生{this.props.statusCode}错误了，回<span onClick={this.onGoBackIndexClickHandle} className='link'>首页</span>吧<DynamicUnderline /></p>
+          <p>Balls,&nbsp;发生404错误了，回<span onClick={this.onGoBackIndexClickHandle} className='link'>首页</span>吧<DynamicUnderline /></p>
           <br/>
         </PaperContainer>
 

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import React, { Component } from 'react';
 import BScroll from "better-scroll";
 import moment from 'moment';
-import * as COMMON_CONST from '../common/const';
-import {url} from '../helper';
+import * as COMMON_CONST from '../../common/const';
+import * as url from '../util/url';
 
 class ArticleList extends Component {
   constructor(props) {

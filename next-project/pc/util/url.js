@@ -1,4 +1,4 @@
-import * as COMMON_CONST from '../common/const';
+import * as COMMON_CONST from '../../common/const';
 
 export function findPathParameterValue(path, parameter) {
   if (parameter) {

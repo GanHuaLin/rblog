@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import BScroll from 'better-scroll'
-import * as COMMON_CONST from '../common/const';
-import {url} from '../helper';
+import * as COMMON_CONST from '../../common/const';
+import * as url from '../util/url';
 
 class Category extends Component {
   constructor(props) {

@@ -1,7 +1,8 @@
 import Layout from '../components/Layout';
 import NoteContent from '../components/NoteContent';
-import {fetch, url} from '../helper'
-import * as COMMON_CONST from '../common/const';
+import * as fetch from '../../common/fetch';
+import * as url from '../util/url';
+import * as COMMON_CONST from '../../common/const';
 
 const Index = (props) => (
   <Layout>

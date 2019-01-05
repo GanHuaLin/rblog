@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as COMMON_CONST from '../common/const';
+import * as COMMON_CONST from '../../common/const';
 import ReactMarkdown from 'react-markdown';
 import BScroll from "better-scroll";
 

@@ -2,7 +2,7 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
 
-export default class MyApp extends App {
+export default class BlogApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};
 

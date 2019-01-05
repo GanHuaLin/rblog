@@ -187,6 +187,8 @@ class Article extends Component {
         }
 
         .md-content {
+          white-space: normal;
+          word-break: break-all;
           transition: opacity .3s ease-out;
         }
 

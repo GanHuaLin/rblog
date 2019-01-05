@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class ArticleContent extends Component {
   constructor(props) {
-    super(props)p;
+    super(props);
   }
 
   render() {

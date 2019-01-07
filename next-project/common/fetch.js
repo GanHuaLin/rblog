@@ -47,7 +47,7 @@ export function findAllCategory() {
  * @returns {Array} 返回文章列表数组
  */
 export function findArticleListByCategory(categoryId) {
-  let list =[];
+  let list = [];
   for (let i = 0; i < articleMetaData.length; i++) {
     const category = articleMetaData[i];
     if (!categoryId || (categoryId === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME)) { // 全部分类

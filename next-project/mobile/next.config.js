@@ -11,10 +11,14 @@ try {
  * @returns {} 所有文章分类和文章详情的路径映射对象
  */
 function exportPostPathMap() {
-  const page = {page: '/'};
-  const pathMap = {
-    '/category/all': page
-  };
+  const pathMap = {};
+
+  articleMetaData.forEach(category => {
+    // 生成文章路径
+    category.article_list.forEach(article => {
+      pathMap[`/p/${article.id}`] = { page: '/article' };
+    });
+  });
 
   return pathMap;
 }
@@ -28,7 +32,6 @@ module.exports = {
       '/about': { page: '/about' }
     };
 
-    // return Object.assign({}, defaultPathMap, basePathMap, await exportPostPathMap());
-    return Object.assign({}, defaultPathMap, basePathMap);
+    return Object.assign({}, defaultPathMap, basePathMap, await exportPostPathMap());
   }
 };

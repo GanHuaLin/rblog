@@ -6,8 +6,6 @@ import HeaderLayout from './HeaderLayout';
 import { GoTriangleDown } from "react-icons/go";
 import { FaCaretUp, FaCheck } from "react-icons/fa";
 
-// TODO 布局好了，开始写事件和取数据，还有如果超过6条记录就给滑动
-
 class IndexHeader extends Component {
   constructor(props) {
     super(props);

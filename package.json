@@ -36,6 +36,7 @@
     "postcss-write-svg": "^3.0.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-icons": "^3.2.2",
     "react-markdown": "^4.0.4",
     "react-redux": "^6.0.0",
     "react-syntax-highlighter": "^10.1.2",

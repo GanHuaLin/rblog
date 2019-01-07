@@ -103,10 +103,6 @@ class IndexHeader extends Component {
                     this.props.categoryList.map((category, index) => {
                       // 如果是当前分类，那么显示小钩
                       let isChoose = false;
-                      // if ((category.category_id === 'all') && (this.props.currentCategory.category_id === 'all')) {
-                      //   isChoose = true;
-                      // }
-
                       if (category.category_id === this.props.currentCategory.category_id) {
                         isChoose = true;
                       }

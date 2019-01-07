@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import * as actionCreator from '../common/store/actionCreator';
+import { withRouter } from 'next/router'
 import BScroll from 'better-scroll'
-import Link from 'next/link';
 import * as COMMON_CONST from '../../common/const';
 import moment from 'moment';
 
@@ -20,12 +20,16 @@ class ArticleList extends Component {
       bindToWrapper: true,
       click: true
     });
+
+    this.showArticleListStyle();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.articleList.length !== this.props.articleList.length) {
       this.scroll.refresh();
     }
+
+    this.showArticleListStyle();
   }
 
   componentWillUnmount() {
@@ -34,26 +38,46 @@ class ArticleList extends Component {
     }
   }
 
+  gotoArticlePageHandle = (evt, articleId) => {
+    // this.props.actions.fetchArticle(articleId);
+    this.props.router.push('/article', `/p/${articleId}`);
+  };
+
+  showArticleListStyle() {
+    const articleListDOMArray = this.scrollContainerRef.current.querySelectorAll('.article-item');
+    let count = 1;
+    articleListDOMArray.forEach(articleDOM => {
+      window.setTimeout(() => {
+        articleDOM.style.opacity = 1;
+      }, count * 100);
+      count++;
+    });
+  }
+
   render() {
+    let containerStyle = {};
+    if (this.props.articleList && this.props.articleList.length === 0) {
+      containerStyle.background = 'url(/static/img/note_icon.png) no-repeat center center';
+      containerStyle.backgroundSize = '50% auto';
+    }
+
     return (
-      <div className='container' ref={this.scrollContainerRef}>
+      <div className='container' ref={this.scrollContainerRef} style={containerStyle}>
         <ul>
           {
             this.props.articleList.map((article, index) => {
               return (
-                <Link as={`/p/${article[COMMON_CONST.ARTICLE_DATA_ID_TEXT]}`} href={'/article'} key={index}>
-                  <li className='article-item'>
-                    <div className="wrapper">
-                      <div className="item">
-                        <div className='part-left'></div>
-                        <div className='part-right'>
-                          <div className="date">{moment(article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</div>
-                          <div className="title">{article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</div>
-                        </div>
+                <li onClick={(evt) => this.gotoArticlePageHandle(evt, article[COMMON_CONST.ARTICLE_DATA_ID_TEXT])} key={index} className='article-item'>
+                  <div className="wrapper">
+                    <div className="item">
+                      <div className='part-left'></div>
+                      <div className='part-right'>
+                        <div className="date">{moment(article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</div>
+                        <div className="title">{article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</div>
                       </div>
                     </div>
-                  </li>
-                </Link>
+                  </div>
+                </li>
               )
             })
           }
@@ -83,6 +107,8 @@ class ArticleList extends Component {
             height: 8vh;
             padding: 0 3vw;
             margin-bottom: 1.3vh;
+            opacity: 0;
+            transition: opacity .2s ease-out;
 
             .wrapper {
               box-shadow: 0 0.3vw 0.6vw rgba(69,18,10,.4);
@@ -159,4 +185,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ArticleList));

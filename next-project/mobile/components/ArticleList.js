@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import * as actionCreator from '../common/store/actionCreator';
 import BScroll from 'better-scroll'
+import Link from 'next/link';
+import * as COMMON_CONST from '../../common/const';
+import moment from 'moment';
 
 class ArticleList extends Component {
   constructor(props) {
@@ -11,8 +17,15 @@ class ArticleList extends Component {
 
   componentDidMount() {
     this.scroll = new BScroll(this.scrollContainerRef.current, {
-      bindToWrapper: true
+      bindToWrapper: true,
+      click: true
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.articleList.length !== this.props.articleList.length) {
+      this.scroll.refresh();
+    }
   }
 
   componentWillUnmount() {
@@ -25,32 +38,24 @@ class ArticleList extends Component {
     return (
       <div className='container' ref={this.scrollContainerRef}>
         <ul>
-          <li className='article-item'>
-            <div className="wrapper">
-              <div className="item">
-                <div className='part-left'></div>
-                <div className='part-right'>
-                  <div className="date">2018年1月6日</div>
-                  <div className="title">比如说我在我的</div>
-                </div>
-              </div>
-            </div>
-          </li>
-
           {
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,].map((item, index) => (
-              <li className='article-item' key={index}>
-                <div className="wrapper">
-                  <div className="item">
-                    <div className='part-left'></div>
-                    <div className='part-right'>
-                      <div className="date">2018年1月6日</div>
-                      <div className="title">比如说我在我的</div>
+            this.props.articleList.map((article, index) => {
+              return (
+                <Link as={`/p/${article[COMMON_CONST.ARTICLE_DATA_ID_TEXT]}`} href={'/article'} key={index}>
+                  <li className='article-item'>
+                    <div className="wrapper">
+                      <div className="item">
+                        <div className='part-left'></div>
+                        <div className='part-right'>
+                          <div className="date">{moment(article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</div>
+                          <div className="title">{article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </li>
-            ))
+                  </li>
+                </Link>
+              )
+            })
           }
         </ul>
 
@@ -142,4 +147,16 @@ class ArticleList extends Component {
   }
 }
 
-export default ArticleList;
+const mapStateToProps = (state) => {
+  return {
+    articleList: state.getIn(['articleList']).toJS()
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({...actionCreator}, dispatch)
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);

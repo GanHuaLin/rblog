@@ -32,3 +32,10 @@ export const changeCategory = (currentCategory) => {
     dispatch(fetchArticleList(currentCategory.category_id));
   }
 };
+
+export const fetchArticle = (articleId) => {
+  return {
+    type: actionTypes.FETCH_ARTICLE,
+    article: fetch.findArticleById(articleId)
+  }
+};

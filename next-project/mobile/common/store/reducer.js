@@ -10,6 +10,7 @@ const defaultInitialState = fromJS({
   showCategory: false,
 
   articleList: [],
+  article: null
 });
 
 export const reducer = (state = defaultInitialState, action) => {
@@ -22,6 +23,8 @@ export const reducer = (state = defaultInitialState, action) => {
       return state.set('currentCategory', fromJS(action.currentCategory));
     case actionTypes.FETCH_ARTICLE_LIST:
       return state.set('articleList', fromJS(action.articleList));
+    case actionTypes.FETCH_ARTICLE:
+      return state.set('article', action.article);
     default: return state;
   }
 };

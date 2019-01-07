@@ -2,6 +2,7 @@ import Layout from '../components/Layout';
 import NoteContent from '../components/NoteContent';
 import * as fetch from '../../common/fetch';
 import * as url from '../util/url';
+import * as commonUrl from '../../common/url';
 import * as COMMON_CONST from '../../common/const';
 
 const Index = (props) => (
@@ -36,8 +37,8 @@ const Index = (props) => (
  *
  */
 Index.getInitialProps = ({asPath}) => {
-  const categoryId = url.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_CATEGORY_TEXT);
-  const articleId = url.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_ARTICLE_TEXT);
+  const categoryId = commonUrl.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_CATEGORY_TEXT);
+  const articleId = commonUrl.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_ARTICLE_TEXT);
 
   const categoryList = fetch.findAllCategory();
   const articleList = fetch.findArticleListByCategory(categoryId);

@@ -149,7 +149,6 @@ class Article extends Component {
                         linkTarget='_blank'
                         renderers={{
                           code: CodeBlock,
-                          // heading: Heading,
                         }}
                       />
                     </div>

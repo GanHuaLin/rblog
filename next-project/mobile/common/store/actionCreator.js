@@ -8,9 +8,27 @@ export const fetchCategoryList = () => {
   };
 };
 
-export const changeCategory = (currentCategory) => {
+export const showCategoryList = (isShow) => {
   return {
-    type: actionTypes.CHANGE_CATEGORY,
-    currentCategory
-  };
+    type: actionTypes.SHOW_CATEGORY_LIST,
+    isShow
+  }
+};
+
+export const fetchArticleList = (categoryId) => {
+  return {
+    type: actionTypes.FETCH_ARTICLE_LIST,
+    articleList: fetch.findArticleListByCategory(categoryId)
+  }
+};
+
+export const changeCategory = (currentCategory) => {
+  return dispatch  => {
+    dispatch({
+      type: actionTypes.CHANGE_CATEGORY,
+      currentCategory
+    });
+
+    dispatch(fetchArticleList(currentCategory.category_id));
+  }
 };

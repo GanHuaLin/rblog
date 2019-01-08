@@ -9,12 +9,13 @@ import ReactMarkdown from 'react-markdown';
 import CodeBlock from './markdown/CodeBlock';
 import * as COMMON_CONST from "../../common/const";
 import * as url from "../../common/url";
+import moment from "moment";
 
 class ArticleContent extends Component {
   constructor(props) {
     super(props);
 
-    this.scroll = React.createRef();
+    this.scroll = null;
     this.wrapperRef = React.createRef();
     this.scrollWrapperRef = React.createRef();
   }
@@ -42,6 +43,12 @@ class ArticleContent extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.scroll) {
+      this.scroll.destroy();
+    }
+  }
+
   recalculateImageHeight = () => {
     const originImages = this.scrollWrapperRef.current.querySelectorAll('img');
     const newImageLoadPromise = [];
@@ -65,11 +72,11 @@ class ArticleContent extends Component {
     Promise.all(newImageLoadPromise).then(imageOffSetHeight => {
       imageOffSetHeight.forEach(fixImageInfo => {
         fixImageInfo.image.removeEventListener('load', loadHandle);
-        originImages[fixImageInfo.index].style.height = '30vh'; //fixImageInfo.height;
+        originImages[fixImageInfo.index].style.height = '30vh';
         originImages[fixImageInfo.index].style.width = 'auto';
         originImages[fixImageInfo.index].style.display = 'block';
         originImages[fixImageInfo.index].style.opacity = '1';
-        originImages[fixImageInfo.index].style.margin = '5vh auto';
+        originImages[fixImageInfo.index].style.margin = '4vh auto';
         originImages[fixImageInfo.index].style.border = '0.3em solid #fff';
       });
     }).finally(() => {
@@ -93,8 +100,8 @@ class ArticleContent extends Component {
                 this.props.article ? (
                   <div className="content">
                     <div className="md-content">
-                      <h1 style={{ textAlign: 'center' }}>重新学习计算机之数据结构</h1>
-                      <p style={{ textAlign: 'right', fontSize: '3vw', overflow: 'hidden', maxHeight: '5vh' }}>2019年1月8日</p>
+                      <h1 style={{ textAlign: 'center' }}>{this.props.article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</h1>
+                      <p style={{ textAlign: 'right', fontSize: '3vw', overflow: 'hidden', maxHeight: '4vh' }}>{moment(this.props.article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</p>
                       <ReactMarkdown
                         source={this.props.article[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT]}
                         escapeHtml={true}
@@ -130,8 +137,10 @@ class ArticleContent extends Component {
             .content {
               padding: 2vh 6vw;
               font-size: 4.3vw;
-              line-height: 5vh;
+              line-height: 4vh;
               word-break: break-word!important;
+              white-space: normal;
+              word-break: break-all;
               font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 
               /* Markdown 样式 */
@@ -197,8 +206,8 @@ class ArticleContent extends Component {
 
               /* 有序，无序列表 */
               .md-content :global(ul) {
-                line-height: 5vh;
-                min-height: 5vh;
+                line-height: 4vh;
+                min-height: 4vh;
                 text-indent: 6vw;
                 position: relative;
                 list-style: none;
@@ -223,8 +232,8 @@ class ArticleContent extends Component {
               }
 
               .md-content :global(ol) {
-                line-height: 5vh;
-                min-height: 5vh;
+                line-height: 4vh;
+                min-height: 4vh;
                 text-indent: 6vw;
                 position: relative;
                 list-style: none;
@@ -260,7 +269,7 @@ class ArticleContent extends Component {
               /* 表格 */
               .md-content :global(table) {
                 width: 100%;
-                margin: 5vh 0;
+                margin: 4vh 0;
                 border-spacing: 0px;
                 box-sizing: border-box;
                 border-collapse:collapse;

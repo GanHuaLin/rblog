@@ -15,9 +15,8 @@ class CodeBlock extends Component {
     this.scroll = new BScroll(this.wrapperRef.current.querySelector('.syntax-high-lighter-container'), {
       scrollY: false,
       scrollX: true,
-      mouseWheel: true,
       scrollbar: {
-        fade: false,
+        fade: true,
         interactive: true
       },
       bounce: false,
@@ -43,12 +42,13 @@ class CodeBlock extends Component {
               border: 'none',
               boxShadow: '0 3px 8px rgba(69,18,10,.4)',
               fontSize: '16px',
+
+              padding: 0,
             }}
             codeTagProps={{
               style: {
                 display: 'inline-block',
-                padding: '0 0.6em 0 0',
-                // marginRight: '1em'
+                padding: '1em'
               }
             }}
           >{this.props.value}

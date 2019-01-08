@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router'
+import Link from 'next/link';
 import HeaderLayout from './HeaderLayout';
 
 class ArticleHeader extends Component {
@@ -9,10 +10,6 @@ class ArticleHeader extends Component {
 
   btnBackHandle = () => {
     this.props.router.back();
-  };
-
-  btnAboutHandle = () => {
-    this.props.router.push('/about');
   };
 
   render() {
@@ -26,7 +23,9 @@ class ArticleHeader extends Component {
             <div className="title">rbackrock`s 的博客</div>
           </div>
           <div className="right">
-            <div onClick={this.btnAboutHandle} className="btn"><span className="text">关于</span></div>
+            <Link href={'/about'}>
+              <div className="btn"><span className="text">关于</span></div>
+            </Link>
           </div>
         </div>
 

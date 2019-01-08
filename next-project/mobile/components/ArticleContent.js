@@ -223,7 +223,7 @@ class ArticleContent extends Component {
                 content: '.';
                 width: 8px;
                 position: absolute;
-                top: 2vh;
+                top: 1.2vh;
                 height: 8px;
                 background: #dfd6c5;
                 overflow: hidden;
@@ -249,7 +249,7 @@ class ArticleContent extends Component {
                 content: '.';
                 width: 8px;
                 position: absolute;
-                top: 2vh;
+                top: 1.2vh;
                 height: 8px;
                 background: #dfd6c5;
                 overflow: hidden;

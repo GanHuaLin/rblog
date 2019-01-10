@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import moment from "moment";
 import ContentLayout from './ContentLayout';
 import CodeBlock from './markdown/CodeBlock';
+import InlineCode from './markdown/InlineCode';
 import Loading from './Loading';
 
 class ArticleContent extends Component {
@@ -99,6 +100,7 @@ class ArticleContent extends Component {
                         escapeHtml={true}
                         renderers={{
                           code: CodeBlock,
+                          inlineCode: InlineCode,
                         }}
                       />
                     </div>
@@ -285,6 +287,15 @@ class ArticleContent extends Component {
                 box-shadow: 0 1px 4px rgba(58,15,0,.2);
                 box-sizing: border-box;
                 transition: opacity .3s ease-out;
+              }
+
+              .md-content :global(code.inline) {
+                display: inline-block;
+                background-color: #b4a08e;
+                color: #fff;
+                margin: 0.2em 0.2em;
+                border-radius: 4px;
+                padding: 0em 0.4em;
               }
             }
           }

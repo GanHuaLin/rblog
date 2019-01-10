@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import BScroll from "better-scroll";
 
 import CodeBlock from './markdown/CodeBlock';
+import InlineCode from './markdown/InlineCode';
 import LoadingTips from './LoadingTips';
 
 class Article extends Component {
@@ -152,6 +153,7 @@ class Article extends Component {
                         linkTarget='_blank'
                         renderers={{
                           code: CodeBlock,
+                          inlineCode: InlineCode
                         }}
                       />
                     </div>
@@ -304,6 +306,22 @@ class Article extends Component {
           font-size: 21px;
         }
 
+        .md-content :global(ul li) {
+          position: relative;
+        }
+
+        .md-content :global(ul li):after {
+          content: '.';
+          width: 8px;
+          position: absolute;
+          top: 20px;
+          height: 8px;
+          background: #dfd6c5;
+          overflow: hidden;
+          left: 1px;
+          border-radius: 4px;
+        }
+
         .md-content :global(ol) {
           margin-left: 21px;
           line-height: 50px;
@@ -317,18 +335,6 @@ class Article extends Component {
 
         .md-content :global(ol li) {
           position: relative;
-        }
-
-        .md-content :global(ul):after {
-          content: '.';
-          width: 8px;
-          position: absolute;
-          top: 20px;
-          height: 8px;
-          background: #dfd6c5;
-          overflow: hidden;
-          left: 1px;
-          border-radius: 4px;
         }
 
         .md-content :global(ol li):after {
@@ -388,6 +394,17 @@ class Article extends Component {
           box-shadow: 0 1px 4px rgba(58,15,0,.2);
           box-sizing: border-box;
           transition: opacity .3s ease-out;
+        }
+
+        .md-content :global(code.inline) {
+          display: inline-block;
+          background-color: #b4a08e;
+          color: #fff;
+          margin: 0 0.2em;
+          border-radius: 4px;
+          padding: 0em 0.4em;
+          height: 30px;
+          line-height: 30px;
         }
       `}</style>
       </div>

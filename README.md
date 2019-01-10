@@ -2,7 +2,7 @@
 
 这是点子有点烂大街基于 [Next.js](https://nextjs.org/) 的静态博客项目，博客整体样式完全参照于锤子便签
 
-说它烂大街是因为基于不同编程语言，核心功能一样，用的最多也比较有代表的已经有 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
+说它烂大街是因为基于不同编程语言，核心功能一样，用的最多也比较有代表的已经有基于 Node.js 的 [Hexo](https://hexo.io) 基于 Ruby 的 [Jekyll](https://jekyllrb.com/) 基于 Go 的 [Hugo](https://gohugo.io/) ...
 
 ## 为什么会有这个项目
 
@@ -10,17 +10,13 @@
 
 + 我觉得用 Markdown 写文章很酷，文章即数据，数据即文件，博客的核心数据是 Markdown 文件，而不是在数据库里被富文本编辑器处理过的字符串。你甚至不用做任何事或者只进行少量修改，就可以直接把你的 Markdown 文章迁移在笔记软件，或者 Github 和简书这样的网站中
 
-+ 我觉得再好的富文本编辑器可以解决较为复杂的文本编辑需要，却无法给你带来纯字符编辑的乐趣
++ 我觉得富文本编辑器可以解决较为复杂的文本编辑需要，却无法给你带来纯字符编辑的乐趣
 
-+ 所决定实现的技术和自己想要的功能契合的刚刚好，既不复杂，也不简陋，打蚊子真正没用高射炮
++ 所决定实现的技术和自己想要的功能契合的刚刚好，既不复杂，也不简陋，打蚊子没用高射炮
 
 + 我想要一个简单好看，自己一手打造的博客 
 
-+ 我想只用 JavaScript 这一种语言实现我的博客，我想用 ES6 的语法来写代码，我想用 React.js 中组件化的方式来组织我的页面结构
-
-+ 我想实现喜欢的博客样式而不是只能用其他人的主题
-
-+ Hexo 的自定义主题也考虑过，由于有一些限制和规则而且需要使用 ejs 之类的 Dynamic Web 技术不是我想要的
++ 我想只用 JavaScript 这一种语言实现我的博客，我想用 ES6 的语法来写代码，我想用组件化的方式来组织我的页面结构
 
 + 我想要了解 Next.js
 
@@ -97,15 +93,17 @@ Markdown 文件规则如下：
 
 + 不支持甘特图
 
-当然，如果你愿意可以自己添加渲染
++ 如果需要加空行，可以使用 `&emsp;`
+
+当然，如果你愿意可以自己添加和修改 Markdown 的渲染
 
 ### 关于渲染
 
-渲染 Markdown 使用了 `react-markdown` 如果要修改和设置 Markdown 的渲染，请参考阅读[官方文档](https://github.com/rexxars/react-markdown)
+渲染 Markdown 使用了 `react-markdown` 如果要修改 Markdown 的渲染，请参考阅读[官方文档](https://github.com/rexxars/react-markdown)
 
 ### 关于展示代码块
 
-Markdown 中展示代码块用了 `react-syntax-highlighter` 同样，如下要设置或修改，请参考阅读[官方文档](https://github.com/conorhastings/react-syntax-highlighter)
+Markdown 中展示代码块用了 `react-syntax-highlighter` 同样，如果想要修改，请参考阅读[官方文档](https://github.com/conorhastings/react-syntax-highlighter)
 
 其中对编程语言支持的语法高亮列表请参考[这里](https://github.com/conorhastings/react-syntax-highlighter/blob/master/AVAILABLE_LANGUAGES_PRISM.MD)
 
@@ -129,19 +127,13 @@ Next.js 中的 `next` `next build` `next export` `next start` 命令不能直接
 
 ## 使用说明
 
-为了方便说明，以下名词解释如下
-
-`PC 端项目目录` 代指根目录下 `/next-project/pc`
-
-`移动端 Web 项目目录` 代指根目录下 `/next-project/mobile`
-
 凡是命令中带有 `-pc` 的都是对 PC 端项目进行操作，凡是命令中带有 `-mobile` 的都是对移动端 Web 项目进行操作
 
 ## 简易使用
 
 基于 PC 端举例
 
-Step1: 项目刚下载或者 Clone 完
+Step1: Clone 或者下载好项目
 
 ```
 npm i
@@ -175,15 +167,13 @@ npm run dev-pc -w
 npm run dev-mobile -w
 ```
 
-需要注意的是，当你在 `_post` 目录下做如下这些操作之后，刷新浏览器可能会遇到 `404`，原因是分类和文章的唯一标识是依赖于它们的文件名生成的短 hash，而它是页面路由组成的一部分，路由映射关系详见 Next.js 关于 [`next.config.js`](https://nextjs.org/docs/#static-html-export) 的说明，当改变了文件名，数据文件已经更新，但是你正在浏览的页面 URL 可能没有及时改变，所以导致了 `404` 不过只是编辑 Markdown 文件内容则完全没有影响。使用导出命令导出的静态页面不会出现这样的问题
+需要注意的是，当你在 `_post` 目录下做如下这些操作之后，刷新浏览器可能会遇到 `404`，原因是分类和文章的唯一标识是依赖于它们的文件名生成的短 hash，而它是页面路由组成的一部分，路由映射关系详见 Next.js 关于 [`next.config.js`](https://nextjs.org/docs/#static-html-export) 的说明，当改变了文件名，数据文件已经更新，但是你正在浏览的页面 URL 可能没有及时改变，所以导致了 `404` 不过只是编辑 Markdown 文件内容则完全没有影响
 
 + 新建文件夹或者文件(增加文章分类或者增加一篇文章)
 + 删除文件夹或者文件(删除文章分类或者删除一篇文章)
 + 修改文件夹或者文件名称(修改文章分类的名称或者修改文章的标题)
 
-我尝试过解决这个问题，但是没有成功
-
-**所以，目前的解决办法是手动访问首页，或者点击没有操作过的分类或者文章的链接**
+**所以，目前的解决办法是访问首页，或者点击没有操作过的分类或者文章的链接**
 
 **这个小问题，这是在修改分类文件夹和文章名称的时候会出现，不会影响导出**
 
@@ -251,13 +241,13 @@ npm run export-mobile
 
 整个博客项目，对于文章来说，只有分类一种属性
 
-文章分类部分字段说明：
+字段说明：
 
 + `category_id` 分类唯一标识，由分类名称 `hash` 生成
 + `category_name` 分类名称，由在 `_post` 下的文件夹名称而来 
 + `article_list` 该分类下所有文章信息
 
-某一分类下所有文章信息字段说明：
+分类下文章信息字段说明：
 + `id` 文章唯一标识，由 Markdown 文件名 `hash` 生成
 + `date` 文章发表时间，由 Markdown 文件名截取而来
 + `title` 文章标题，由 Markdown 文件名截取而来
@@ -299,5 +289,4 @@ remove---/Users/anonymous/Code/frontend/blog-birch/_post/Life/[test]-[20181228].
 目前的解决办法是在监听回调中判断监控目标文件的后缀只能是空字符串或者 `.md` 才进行扫描生成写入逻辑
 
 所以，当你使用了 `npm run dev -w` 或者 `npm run watch` 命令很不凑巧的遇到没有错误说明只有错误堆栈的异常时，可以优先检查一下 `db` 文件夹下的文件是否存在以及内容是否是标准 JSON 
-
 

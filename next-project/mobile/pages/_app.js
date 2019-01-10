@@ -1,8 +1,6 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
-import withReduxStore from '../lib/with-redux-store'
-import { Provider } from 'react-redux'
 
 class BlogApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -16,7 +14,7 @@ class BlogApp extends App {
   }
 
   render () {
-    const { Component, pageProps, reduxStore } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <Container>
@@ -24,9 +22,7 @@ class BlogApp extends App {
           <title>rbackrock`s blog</title>
           <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
         </Head>
-        <Provider store={reduxStore}>
-          <Component {...pageProps} />
-        </Provider>
+        <Component {...pageProps} />
 
         <style jsx global>{`
           /**
@@ -155,4 +151,4 @@ class BlogApp extends App {
   }
 }
 
-export default withReduxStore(BlogApp);
+export default BlogApp;

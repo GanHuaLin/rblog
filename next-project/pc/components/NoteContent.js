@@ -23,9 +23,11 @@ class NoteContent extends Component {
     let rightStyle = {};
     if (this.state.expand) {
       leftStyle.visibility = 'hidden';
+      leftStyle.opacity = '0';
       rightStyle.transform = 'translate3d(-17.5vw, 0, 0)';
     } else {
       leftStyle.visibility = 'visible';
+      leftStyle.opacity = '1';
       rightStyle.transform = 'translate3d(0, 0, 0)';
     }
 

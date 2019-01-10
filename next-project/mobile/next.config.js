@@ -1,4 +1,4 @@
-let articleMetaData = {};
+let articleMetaData = [];
 
 try {
   articleMetaData = require('../../db/article-meta.json');
@@ -11,12 +11,19 @@ try {
  * @returns {} 所有文章分类和文章详情的路径映射对象
  */
 function exportPostPathMap() {
-  const pathMap = {};
+  const page = {page: '/'};
+  const pathMap = {
+    '/category/all': page
+  };
 
   articleMetaData.forEach(category => {
+    // 生成分类路径
+    pathMap[`/category/${category.category_id}`] = page;
+
     // 生成文章路径
     category.article_list.forEach(article => {
-      pathMap[`/p/${article.id}`] = { page: '/article' };
+      pathMap[`/category/${category.category_id}/p/${article.id}`] = page;
+      pathMap[`/category/all/p/${article.id}`] = page;
     });
   });
 
@@ -33,5 +40,5 @@ module.exports = {
     };
 
     return Object.assign({}, defaultPathMap, basePathMap, await exportPostPathMap());
-  }
+  },
 };

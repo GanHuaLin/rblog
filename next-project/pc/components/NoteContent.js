@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IoIosExpand } from "react-icons/io";
+import { MdCompareArrows } from "react-icons/md";
 import Category from '../components/Category';
 import ArticleList from '../components/ArticleList';
 import Article from '../components/Article';
@@ -42,7 +42,7 @@ class NoteContent extends Component {
           />
         </div>
         <div className="node-right" style={rightStyle}>
-          <span className='wrapper-expand' onClick={this.onToggleExpandClickHandle}><IoIosExpand /></span>
+          <span className='wrapper-expand' onClick={this.onToggleExpandClickHandle}><MdCompareArrows /></span>
           <Article
             article={this.props.article}
             pathParams={this.props.pathParams}
@@ -78,7 +78,7 @@ class NoteContent extends Component {
               color: #b4a08e;
               position: absolute;
               top: 8px;
-              right: 0px;
+              right: 5px;
               z-index: 10;
               font-size: 1.8em;
             }

@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
-import * as actionCreator from '../common/store/actionCreator';
 import BScroll from 'better-scroll';
-import {withRouter} from "next/dist/lib/router";
-import ContentLayout from './ContentLayout';
 import ReactMarkdown from 'react-markdown';
-import CodeBlock from './markdown/CodeBlock';
-import * as COMMON_CONST from "../../common/const";
-import * as url from "../../common/url";
 import moment from "moment";
+import ContentLayout from './ContentLayout';
+import CodeBlock from './markdown/CodeBlock';
+import Loading from './Loading';
 
 class ArticleContent extends Component {
   constructor(props) {
@@ -26,19 +21,16 @@ class ArticleContent extends Component {
       click: true,
     });
 
-    const articleId = url.findPathParameterValue(this.props.router.asPath, COMMON_CONST.URL_PATH_ARTICLE_TEXT);
-    this.props.actions.fetchArticle(articleId);
+    if (this.wrapperRef.current) {
+      this.wrapperRef.current.style.opacity = '1';
+    }
+
     this.recalculateImageHeight();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.article !== this.props.article) {
       this.scroll.refresh();
-
-      if (this.wrapperRef.current) {
-        this.wrapperRef.current.style.opacity = '1';
-      }
-
       this.recalculateImageHeight();
     }
   }
@@ -91,7 +83,7 @@ class ArticleContent extends Component {
       <ContentLayout>
         <div className="container" >
           {
-            !this.props.article ? <div className="loading"><span className="text">Loading...</span></div> : null
+            !this.props.article ? <Loading /> : null
           }
 
           <div className="wrapper" ref={this.wrapperRef}>
@@ -100,10 +92,10 @@ class ArticleContent extends Component {
                 this.props.article ? (
                   <div className="content">
                     <div className="md-content">
-                      <h1 style={{ textAlign: 'center' }}>{this.props.article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</h1>
-                      <p style={{ textAlign: 'right', fontSize: '3vw', overflow: 'hidden', maxHeight: '4vh' }}>{moment(this.props.article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</p>
+                      <h1 style={{ textAlign: 'center' }}>{this.props.article.title}</h1>
+                      <p style={{ textAlign: 'right', fontSize: '3vw', overflow: 'hidden', maxHeight: '4vh', padding: '1vh 0' }}>{moment(this.props.article.date).format('YYYY年MM月DD日')}</p>
                       <ReactMarkdown
-                        source={this.props.article[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT]}
+                        source={this.props.article.content}
                         escapeHtml={true}
                         renderers={{
                           code: CodeBlock,
@@ -296,55 +288,10 @@ class ArticleContent extends Component {
               }
             }
           }
-
-          .loading {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            width: 100%;
-            height: 100%;
-
-            .text {
-              font-size: 8vw;
-              animation: blink 1.3s infinite;
-            }
-          }
-
-          @keyframes blink {
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-          }
-          @-webkit-keyframes blink {
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-          }
-          @-moz-keyframes blink {
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-          }
         `}</style>
       </ContentLayout>
     );
   };
 }
 
-const mapStateToProps = (state) => {
-  return {
-    article: state.getIn(['article'])
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({...actionCreator}, dispatch)
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ArticleContent));
+export default ArticleContent;

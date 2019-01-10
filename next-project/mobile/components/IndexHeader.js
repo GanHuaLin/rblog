@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
-import * as actionCreator from '../common/store/actionCreator';
 import HeaderLayout from './HeaderLayout';
 import { GoTriangleDown } from "react-icons/go";
 import { FaCaretUp, FaCheck } from "react-icons/fa";
 import BScroll from "better-scroll";
 
+import Link from 'next/link';
+
 class IndexHeader extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      currentCategoryName: '全部分类'
+    };
 
     this.categoryListRef = React.createRef();
     this.maskRef = React.createRef();
@@ -18,24 +21,18 @@ class IndexHeader extends Component {
     this.scroll = null;
   }
 
-  static async getInitialProps() {
-    return {  };
-  }
-
   componentDidMount() {
-    this.props.actions.fetchCategoryList();
-
     this.scroll = new BScroll(this.scrollContainerRef.current, {
       bindToWrapper: true,
       click: true
     });
-
-    this.props.actions.fetchArticleList();
+    this.findCurrentCategoryName();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.showCategory !== this.props.showCategory) {
-      this.isShowCategoryListStyle();
+    this.isShowCategoryListStyle(false);
+    if (prevProps.currentCategoryId !== this.props.currentCategoryId) {
+      this.findCurrentCategoryName();
     }
   }
 
@@ -46,17 +43,23 @@ class IndexHeader extends Component {
   }
 
   isShowCategoryListHandle = (evt) => {
-    this.props.actions.showCategoryList(!this.props.showCategory);
+    this.isShowCategoryListStyle(true);
   };
 
   maskHandle = () => {
-    this.props.actions.showCategoryList(false);
+    this.isShowCategoryListStyle(false);
   };
 
-  chooseCategoryHandle = (evt, category) => {
-    evt.stopPropagation();
-    this.props.actions.changeCategory(category);
-    this.props.actions.showCategoryList(false);
+  findCurrentCategoryName = () => {
+    for (let i = 0, currentCategory; i < this.props.categoryList.length; i++) {
+      currentCategory = this.props.categoryList[i];
+      if (currentCategory.category_id === this.props.currentCategoryId) {
+        this.setState({
+          currentCategoryName: currentCategory.category_name
+        });
+        break;
+      }
+    }
   };
 
   /**
@@ -69,10 +72,9 @@ class IndexHeader extends Component {
    * 延迟执行是因为立马设置 display 样式和透明度似乎不会发起动画效果
    *
    */
-  isShowCategoryListStyle() {
-    const isShowCategory = this.props.showCategory;
-    this.maskRef.current.style.display = isShowCategory ? 'block' : 'none';
-    if (isShowCategory) {
+  isShowCategoryListStyle(isShow) {
+    this.maskRef.current.style.display = isShow ? 'block' : 'none';
+    if (isShow) {
       this.categoryListRef.current.style.display = 'block';
       this.scroll.refresh();
       window.setTimeout(() => {
@@ -92,7 +94,7 @@ class IndexHeader extends Component {
       <HeaderLayout>
         <div className="container">
           <div className="title" onClick={this.isShowCategoryListHandle}>
-            <h1 className='text'>{this.props.currentCategory.category_name}<GoTriangleDown color='#413833' size='0.6em' style={{ verticalAlign: 'middle', marginLeft: '2vw' }} /></h1>
+            <h1 className='text'>{this.state.currentCategoryName}<GoTriangleDown color='#413833' size='0.6em' style={{ verticalAlign: 'middle', marginLeft: '2vw' }} /></h1>
           </div>
           <div className="category-list" ref={this.categoryListRef} >
             <div className="list-container">
@@ -100,14 +102,18 @@ class IndexHeader extends Component {
               <div className="scroll-container" ref={this.scrollContainerRef}>
                 <ul>
                   {
-                    this.props.categoryList.map((category, index) => {
+                    this.props.categoryList && this.props.categoryList.map((category, index) => {
                       // 如果是当前分类，那么显示小钩
                       let isChoose = false;
-                      if (category.category_id === this.props.currentCategory.category_id) {
+                      if (category.category_id === this.props.currentCategoryId) {
                         isChoose = true;
                       }
 
-                      return <li onClick={(evt) => this.chooseCategoryHandle(evt, category)} key={index} className="item"><div className="content"><div className="left"><div className="name">{category.category_name}</div><div className="num">{category.category_num}</div></div><div className="right"><FaCheck color="#5083ff" style={{ visibility: isChoose ? 'visible' : 'hidden', verticalAlign: 'middle' }} /></div></div></li>
+                      return (
+                        <Link key={index} as={`/category/${category.category_id}`} href={'/'}>
+                          <li className="item"><div className="content"><div className="left"><div className="name">{category.category_name}</div><div className="num">{category.category_num}</div></div><div className="right"><FaCheck color="#5083ff" style={{ visibility: isChoose ? 'visible' : 'hidden', verticalAlign: 'middle' }} /></div></div></li>
+                        </Link>
+                      )
                     })
                   }
                 </ul>
@@ -244,18 +250,4 @@ class IndexHeader extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    categoryList: state.getIn(['categoryList']).toJS(),
-    currentCategory: state.getIn(['currentCategory']).toJS(),
-    showCategory: state.getIn(['showCategory']),
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({...actionCreator}, dispatch)
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(IndexHeader);
+export default IndexHeader;

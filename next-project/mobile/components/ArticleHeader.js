@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'next/router'
 import Link from 'next/link';
 import HeaderLayout from './HeaderLayout';
+import * as commonUrl from '../../common/url';
 
 class ArticleHeader extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class ArticleHeader extends Component {
   }
 
   btnBackHandle = () => {
-    this.props.router.back();
+    this.props.router.replace('/', `/category/${commonUrl.findPathParameterValue(this.props.router.asPath, 'category')}`);
   };
 
   render() {

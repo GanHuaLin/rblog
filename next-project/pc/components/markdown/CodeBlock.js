@@ -64,7 +64,7 @@ class CodeBlock extends Component {
             display: flex;
             position: relative;
             align-items:center;
-            width: 80%;
+            width: 100%;
             margin: 0 auto;
           }
 

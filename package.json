@@ -26,7 +26,6 @@
   "devDependencies": {
     "better-scroll": "^1.13.2",
     "commander": "^2.19.0",
-    "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "lost": "^8.3.0",
     "moment": "^2.23.0",
@@ -38,11 +37,7 @@
     "react-dom": "^16.7.0",
     "react-icons": "^3.2.2",
     "react-markdown": "^4.0.4",
-    "react-redux": "^6.0.0",
     "react-syntax-highlighter": "^10.1.2",
-    "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.7",
-    "redux-thunk": "^2.3.0",
     "short-hash": "^1.0.0",
     "styled-jsx-plugin-postcss": "^2.0.0"
   },

@@ -4,6 +4,7 @@ const { execSync } = require('child_process');
 const helper = require('../src/common/helper');
 const generator = require('../src/generate');
 const COMMON_CONST = require('./const');
+const print = require('../src/common/print');
 
 let currentPlatformRootPath = COMMON_CONST.PC_ROOT_PATH;
 

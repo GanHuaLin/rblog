@@ -8,3 +8,12 @@ export function findPathParameterValue(path, parameter) {
 
   return '';
 }
+
+export function existPathName(path, name) {
+  let exist = false;
+  if (path && name) {
+    path.indexOf(`/${name}`) !== -1 ? exist = true : exist = false;
+  }
+
+  return exist;
+}

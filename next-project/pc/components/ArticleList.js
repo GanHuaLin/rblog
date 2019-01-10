@@ -1,8 +1,7 @@
-import Link from 'next/link';
 import React, { Component } from 'react';
+import Link from 'next/link';
 import BScroll from "better-scroll";
 import moment from 'moment';
-import * as COMMON_CONST from '../../common/const';
 import * as url from '../util/url';
 
 class ArticleList extends Component {
@@ -64,16 +63,16 @@ class ArticleList extends Component {
             {
               this.props.articleList && (this.props.articleList.length > 0) ? ((
                 this.props.articleList.map((article, index) => (
-                  <li className={`item ${this.isOnArticleListItemStyleClass(this.props['pathParams'][COMMON_CONST.URL_PATH_ARTICLE_TEXT], article[COMMON_CONST.ARTICLE_DATA_ID_TEXT], index)}`} key={index}>
+                  <li className={`item ${this.isOnArticleListItemStyleClass(this.props['pathParams'].p, article.id, index)}`} key={index}>
                     {
                       <Link as={
                         `${url.makeBlogDataUrlPath({
-                          categoryId: this.props.pathParams[COMMON_CONST.URL_PATH_CATEGORY_TEXT], articleId: article[COMMON_CONST.ARTICLE_DATA_ID_TEXT]})}`}
+                          categoryId: this.props.pathParams.category, articleId: article.id})}`}
                             href={'/'}
                       >
                         <div className="article-info" >
-                          <div className="date">{moment(article[COMMON_CONST.ARTICLE_DATA_DATE_TEXT]).format('YYYY年MM月DD日')}</div>
-                          <div className="title">{article[COMMON_CONST.ARTICLE_DATA_TITLE_TEXT]}</div>
+                          <div className="date">{moment(article.date).format('YYYY年MM月DD日')}</div>
+                          <div className="title">{article.title}</div>
                         </div>
                       </Link>
                     }

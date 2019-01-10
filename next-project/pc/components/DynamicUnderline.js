@@ -2,7 +2,6 @@ import { Fragment } from 'react';
 
 export default () => (
   <Fragment>
-    {/*<span className='motto'>&nbsp;_</span>*/}
     &nbsp;<span className='motto'></span>
 
     <style jsx>{`

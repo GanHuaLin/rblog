@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as COMMON_CONST from '../../common/const';
 import ReactMarkdown from 'react-markdown';
 import BScroll from "better-scroll";
 
@@ -11,7 +10,7 @@ class Article extends Component {
     super(props);
 
     this.state = {
-      showLoading: true
+      loading: true
     };
 
     this.scrollContainerRef = React.createRef();
@@ -32,7 +31,7 @@ class Article extends Component {
 
     this.toggleScrollBar(false, false);
     if (this.contentRef.current) {
-      this.setShowLoadingStatus(false);
+      this.setShowLoading(false);
       this.setShowArticle(true);
     }
 
@@ -43,6 +42,10 @@ class Article extends Component {
     if (this.contentRef.current) {
       this.setShowArticle(true);
       this.recalculateImageHeight();
+    }
+
+    if ((prevProps.article === null) && this.props.article) {
+      this.setShowLoading(false);
     }
   }
 
@@ -60,14 +63,14 @@ class Article extends Component {
     this.toggleScrollBar(false);
   };
 
-  setShowArticle(show) {
-    this.contentRef.current.style.opacity = show ? 1 : 0;
+  setShowLoading(show) {
+    this.setState({
+      loading: show
+    })
   }
 
-  setShowLoadingStatus(show) {
-    this.setState({
-      showLoading: show
-    });
+  setShowArticle(show) {
+    this.contentRef.current.style.opacity = show ? 1 : 0;
   }
 
   toggleScrollBar(toggle, isTransition=true) {
@@ -132,7 +135,7 @@ class Article extends Component {
     return (
       <div className='article'>
         {
-          this.state.showLoading ? <LoadingTips /> : null
+          this.props.article && this.state.loading ? <LoadingTips /> : null
         }
 
         <div className='wrapper' ref={this.scrollContainerRef} onMouseEnter={this.onArticleMouseEnterHandle} onMouseLeave={this.onArticleMouseLeaveHandle}>
@@ -144,7 +147,7 @@ class Article extends Component {
                     <div className='md-content' ref={this.contentRef} style={{opacity: 0}}>
                       <h1 style={{ textAlign: 'center' }}>{this.props.article.title}</h1>
                       <ReactMarkdown
-                        source={this.props.article[COMMON_CONST.ARTICLE_DATA_CONTENT_TEXT]}
+                        source={this.props.article.content}
                         escapeHtml={true}
                         linkTarget='_blank'
                         renderers={{

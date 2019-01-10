@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import BScroll from 'better-scroll'
-import * as COMMON_CONST from '../../common/const';
 import * as url from '../util/url';
 
 class Category extends Component {
@@ -63,16 +62,16 @@ class Category extends Component {
             <ul className='list-wrapper'>
               {
                 this.props['categoryList'].map((category, index) => (
-                  <li className={`item ${this.isOnCategoryStyleClass(this.props['pathParams'][COMMON_CONST.URL_PATH_CATEGORY_TEXT], category[COMMON_CONST.CATEGORY_DATA_ID_TEXT], index)}`} key={index}>
+                  <li className={`item ${this.isOnCategoryStyleClass(this.props['pathParams'].category, category.category_id, index)}`} key={index}>
                     <Link as={
-                      category[COMMON_CONST.CATEGORY_DATA_ID_TEXT] === COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME ?
-                        `${url.makeBlogDataUrlPath({categoryId: COMMON_CONST.URL_PATH_ALL_CATEGORY_NAME})}` :
-                        `${url.makeBlogDataUrlPath({categoryId: category[COMMON_CONST.CATEGORY_DATA_ID_TEXT]})}`}
+                      category.category_id === 'all' ?
+                        `${url.makeBlogDataUrlPath({categoryId: 'all'})}` :
+                        `${url.makeBlogDataUrlPath({categoryId: category.category_id})}`}
                       href={'/'}
                     >
                       <div className='category-info'>
-                        <div className="name">{category[COMMON_CONST.CATEGORY_DATA_NAME_TEXT]}</div>
-                        <div className="num">{category[COMMON_CONST.CATEGORY_DATA_ARTICLE_NUM_TEXT]}</div>
+                        <div className="name">{category.category_name}</div>
+                        <div className="num">{category.category_num}</div>
                       </div>
                     </Link>
                   </li>

@@ -1,9 +1,18 @@
 import Layout from '../components/Layout';
 import NoteContent from '../components/NoteContent';
-import * as fetch from '../../common/fetch';
-import * as url from '../util/url';
 import * as commonUrl from '../../common/url';
-import * as COMMON_CONST from '../../common/const';
+
+const server = require('../../../api/service');
+let articleMetaData = [];
+let articleListData = {};
+
+try {
+  articleMetaData = require('../../../db/article-meta.json');
+  articleListData = require('../../../db/article-list.json');
+} catch (e) {
+  console.log(e);
+  throw `文章原数据格式异常，请查看 db 目录下生成的数据文件`;
+}
 
 const Index = (props) => (
   <Layout>
@@ -37,25 +46,25 @@ const Index = (props) => (
  *
  */
 Index.getInitialProps = ({asPath}) => {
-  const categoryId = commonUrl.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_CATEGORY_TEXT);
-  const articleId = commonUrl.findPathParameterValue(asPath, COMMON_CONST.URL_PATH_ARTICLE_TEXT);
-
+  const fetch = server.init(articleMetaData, articleListData);
+  const categoryId = commonUrl.findPathParameterValue(asPath, 'category');
+  const articleId = commonUrl.findPathParameterValue(asPath, 'p');
   const categoryList = fetch.findAllCategory();
-  const articleList = fetch.findArticleListByCategory(categoryId);
-  let article = null;
+  const articleList = fetch.findArticleListByCategory(categoryId || 'all');
 
+  let article = null;
   if (articleId) {
     article = fetch.findArticleById(articleId);
   } else {
     if (articleList.length > 0) {
-      article = fetch.findArticleById(articleList[0][COMMON_CONST.ARTICLE_DATA_ID_TEXT]);
+      article = fetch.findArticleById(articleList[0].id);
     }
   }
 
   return {
     pathParams: {
-      [COMMON_CONST.URL_PATH_CATEGORY_TEXT]: categoryId,
-      [COMMON_CONST.URL_PATH_ARTICLE_TEXT]: articleId,
+      category: categoryId,
+      p: articleId,
     },
     categoryList,
     articleList,

@@ -1,7 +1,7 @@
 import React from 'react'
+import { withRouter } from 'next/router'
 import PaperContainer from '../components/PaperContainer';
 import DynamicUnderline from '../components/DynamicUnderline';
-import { withRouter } from 'next/router'
 
 class Error extends React.Component {
   static getInitialProps({ res, err }) {

@@ -21,7 +21,6 @@ class CodeBlock extends Component {
       },
       bounce: false,
       bindToWrapper: true,
-      stopPropagation: true
     });
   }
 

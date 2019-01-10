@@ -22,7 +22,6 @@ class CodeBlock extends Component {
       },
       bounce: false,
       bindToWrapper: true,
-      stopPropagation: true
     });
 
     const rowHeight = 50;
@@ -65,7 +64,7 @@ class CodeBlock extends Component {
             display: flex;
             position: relative;
             align-items:center;
-            width: 65%;
+            width: 80%;
             margin: 0 auto;
           }
 
